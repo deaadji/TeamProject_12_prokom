@@ -8,11 +8,11 @@ root.configure(bg="#fff")
 
 #label_tengah= tk.Label(root, text='AMABATUKAM', font=('arial, 18'))
 #label_tengah.pack()
-gambar_kiri=PhotoImage(file='LOGO LOGIN.png')
+gambar_kiri=PhotoImage(file='KELOMPOK 12/LOGO LOGIN.png')
 
 frame=Frame(root,width=350,height=350,bg='white')
 frame.place(x=480,y=70)
-Label(root,image=gambar_kiri,bg='white').place(x=0,y=0)
+Label(root,image=gambar_kiri,bg='white').place(x=-5,y=-50)
 
 heading=Label(frame,text='Masuk',fg='red',bg='white',font=('Microsoft YaHei UI Light',23,'bold'))
 heading.place(x=120,y=5)
