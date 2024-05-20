@@ -14,30 +14,16 @@ def login_CMD():
     usernama=username.get()
     paswed=password.get()
 
-    if usernama=='admoon' and paswed=='halo dunia':
-        print("ahayy")
-        Main_menu()
-    elif usernama!='admoon' and paswed!='halo dunia':
-        messagebox.showerror("Tidak Ditemukan","Username dan/atau Password salah. pastikan kapital dan spasi tepat")
-
     with open("users.csv", mode="r") as f:
         reader = csv.reader(f,delimiter=",")
         for row in reader:
             if row == [usernama,paswed]:
                 Main_menu()
-                return True
-    messagebox.showerror("Tidak Ditemukan","Username dan/atau Password salah. pastikan kapital dan spasi tepat")
-    return False
-
-    if usernama=='admoon' and paswed=='halo dunia':
-        print("ahayy")
-        Main_menu()
-    elif usernama!='admoon' and paswed!='halo dunia':
-        messagebox.showerror("Tidak Ditemukan","Username dan/atau Password salah. pastikan kapital dan spasi tepat")
+            elif row!= [usernama,paswed]:
+                messagebox.showerror("Tidak Ditemukan","Username dan/atau Password salah. pastikan kapital dan spasi tepat")
 
 
     if usernama=='admoon' and paswed=='halo dunia':
-        print("ahayy")
         Main_menu()
     elif usernama!='admoon' and paswed!='halo dunia':
         messagebox.showerror("Tidak Ditemukan","Username dan/atau Password salah. pastikan kapital dan spasi tepat")
@@ -46,7 +32,11 @@ def login_CMD():
     elif paswed!='halo dunia':
         messagebox.showerror("Tidak Ditemukan","Password salah. pastikan kapital dan spasi tepat")
 
+
+#=====================================================================================
 #main menu tapi blom jadi 
+
+
 def Main_menu():
     screen1=Toplevel(root)
     screen1.title("woke")
@@ -73,39 +63,39 @@ def register():
     daftar_screen.config(bg='white')
 
     def on_enter(e):
-        username.delete(0, "end")
+        username_daftar.delete(0, "end")
 
     def on_leave(e):
-        name=username.get()
+        name=username_daftar.get()
         if name=='':
-            username.insert(0,'Tulis Username Anda')
+            username_daftar.insert(0,'Tulis Username Anda')
     
     Frame(daftar_screen,width=300,height=2,bg='black').place(x=165,y=270)
     Frame(daftar_screen,width=300,height=2,bg='black').place(x=165,y=340)
 
-    username = Entry(daftar_screen,width=25,fg='grey',border=0,bg='white',font=('Microsoft YaHei UI Light',13))
-    username.place(x=180,y=240)
-    username.insert(0,'Tulis Username Anda')
-    username.bind('<FocusIn>', on_enter)
-    username.bind('<FocusOut>', on_leave)
+    username_daftar = Entry(daftar_screen,width=25,fg='grey',border=0,bg='white',font=('Microsoft YaHei UI Light',13))
+    username_daftar.place(x=180,y=240)
+    username_daftar.insert(0,'Tulis Username Anda')
+    username_daftar.bind('<FocusIn>', on_enter)
+    username_daftar.bind('<FocusOut>', on_leave)
 
     def on_enter(e):
-        password.delete(0, "end")
+        password_daftar.delete(0, "end")
 
     def on_leave(e):
-        name=username.get()
+        name=password_daftar_daftar.get()
         if name=='':
-            password.insert(0,'Tulis Password Anda')
-    password = Entry(daftar_screen,width=25,fg='grey',border=0,bg='white',font=('Microsoft YaHei UI Light',13))
-    password.place(x=180,y=310)
-    password.insert(0,'Tulis Password Anda')
-    password.bind('<FocusIn>', on_enter)
-    password.bind('<FocusOut>', on_leave)
+            password_daftar.insert(0,'Tulis Password Anda')
+    password_daftar = Entry(daftar_screen,width=25,fg='grey',border=0,bg='white',font=('Microsoft YaHei UI Light',13))
+    password_daftar.place(x=180,y=310)
+    password_daftar.insert(0,'Tulis Password Anda')
+    password_daftar.bind('<FocusIn>', on_enter)
+    password_daftar.bind('<FocusOut>', on_leave)
 
     with open("users.csv", mode="a", newline="") as f:
         writer = csv.writer(f,delimiter=",")
-        email= username.get
-        passuword = password.get()
+        email= "admoon"
+        passuword = "halo dunia"
         def daftar_fungsi():
             if username=="":
                 messagebox.showerror("Invalid","Masukan Username dan Password terlebih dahulu")
