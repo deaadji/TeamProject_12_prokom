@@ -31,7 +31,7 @@ def Main_menu():
 
     screen1.mainloop()
 
-def register():
+#def register():
     with open("users.csv", mode="a", newline="") as f:
         writer = csv.writer(f,delimiter=",")
         email = input("Please enter email: ")
@@ -43,7 +43,7 @@ def register():
         else:
             print("Please try again!")
 
-def login():
+#def login():
     email = input("Please enter email: ")
     password = input("Please enter your password: ")
     with open("users.csv", mode="r") as f:
@@ -62,11 +62,11 @@ def login():
 
 
 #bug disini, janlup directory nya
-gambar_kiri=PhotoImage(file='KELOMPOK 12/LOGO LOGIN.png')
+#gambar_kiri=PhotoImage(file='KELOMPOK 12/LOGO LOGIN.png')
 
 frame=Frame(root,width=350,height=350,bg='white')
 frame.place(x=480,y=70)
-Label(root,image=gambar_kiri,bg='white').place(x=-5,y=-50)
+#Label(root,image=gambar_kiri,bg='white').place(x=-5,y=-50)
 
 heading=Label(frame,text='Masuk',fg='red',bg='white',font=('Microsoft YaHei UI Light',23,'bold'))
 heading.place(x=120,y=5)
@@ -104,7 +104,7 @@ Frame(frame,width=300,height=2,bg='black').place(x=25,y=170)
 Button(frame,width=39,pady=7,text='sign in',bg='#de2b28',cursor='hand2',fg='white',border=0,command=daftar_CMD).place(x=35,y=205)
 akun=Label(frame,text='Tidak memiliki akun SI JAGO PARKIR?',fg='black',bg='white',font=('Microsoft YaHei UI Light',9))
 akun.place(x=62,y=250)
-daftar=Button(frame,width=16,text='Daftar sekarang!',border=0,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'), command=register)
+daftar=Button(frame,width=16,text='Daftar sekarang!',border=0,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'), command=daftar_CMD)
 daftar.place(x=110,y=270)
 
 copy=Label(root,text='Kelompok 12 Nexus Copyright @2024',fg='navy',border=0,bg='white',font=('Microsoft YaHei UI Light',9,'italic'))
