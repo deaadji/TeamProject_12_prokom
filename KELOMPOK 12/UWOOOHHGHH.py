@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import *
+from tkinter import messagebox
 import csv
 
 root = tk.Tk()
@@ -15,6 +16,8 @@ def daftar_CMD():
     if usernama=='admoon' and paswed=='halo dunia':
         print("ahayy")
         Main_menu()
+    elif usernama!='admoon' and paswed!='halo dunia':
+        messagebox.showerror("Tidak Ditemukan","Username dan/atau Password salah. pastikan kapital dan spasi tepat")
    
 def Main_menu():
     screen1=Toplevel(root)
