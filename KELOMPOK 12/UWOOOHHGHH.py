@@ -19,6 +19,10 @@ def daftar_CMD():
         Main_menu()
     elif usernama!='admoon' and paswed!='halo dunia':
         messagebox.showerror("Tidak Ditemukan","Username dan/atau Password salah. pastikan kapital dan spasi tepat")
+    elif usernama!='admoon':
+        messagebox.showerror("Tidak Ditemukan","Username salah. pastikan kapital dan spasi tepat")
+    elif paswed!='halo dunia':
+        messagebox.showerror("Tidak Ditemukan","Password salah. pastikan kapital dan spasi tepat")
 
 #main menu tapi blom jadi 
 def Main_menu():
@@ -85,5 +89,5 @@ daftar.place(x=110,y=270)
 copy=Label(root,text='Kelompok 12 Nexus Copyright @2024',fg='navy',border=0,bg='white',font=('Microsoft YaHei UI Light',9,'italic'))
 copy.place(x=350,y=420)
 
-root.mainloop()
+root.mainloop() 
 
