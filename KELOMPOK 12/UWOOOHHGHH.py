@@ -6,8 +6,6 @@ root.wm_title('SI JAGO PARKIR')
 root.geometry('900x500')
 root.configure(bg="#fff")
 
-#label_tengah= tk.Label(root, text='AMABATUKAM', font=('arial, 18'))
-#label_tengah.pack()
 gambar_kiri=PhotoImage(file='KELOMPOK 12/LOGO LOGIN.png')
 
 frame=Frame(root,width=350,height=350,bg='white')
