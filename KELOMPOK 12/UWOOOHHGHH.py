@@ -9,6 +9,7 @@ root.geometry('900x500')
 root.configure(bg="#fff")
 root.resizable(False,False)
 
+#fungsi utama login screen
 def daftar_CMD():
     usernama=username.get()
     paswed=password.get()
@@ -18,7 +19,8 @@ def daftar_CMD():
         Main_menu()
     elif usernama!='admoon' and paswed!='halo dunia':
         messagebox.showerror("Tidak Ditemukan","Username dan/atau Password salah. pastikan kapital dan spasi tepat")
-   
+
+#main menu tapi blom jadi 
 def Main_menu():
     screen1=Toplevel(root)
     screen1.title("woke")
@@ -28,6 +30,11 @@ def Main_menu():
     Label(screen1,text='Awikwok',bg='white', font=('Calibri(body)',50,'bold')).pack(expand=True)
 
     screen1.mainloop()
+
+#===================================================================
+#GUI login screen
+#===================================================================
+
 
 #bug disini, janlup directory nya
 gambar_kiri=PhotoImage(file='KELOMPOK 12/LOGO LOGIN.png')
@@ -79,3 +86,4 @@ copy=Label(root,text='Kelompok 12 Nexus Copyright @2024',fg='navy',border=0,bg='
 copy.place(x=350,y=420)
 
 root.mainloop()
+
