@@ -28,12 +28,15 @@ def daftar_CMD():
 def Main_menu():
     screen1=Toplevel(root)
     screen1.title("woke")
-    screen1.geometry('925x500')
+    m = screen1.maxsize()
+    screen1.geometry('{}x{}+0+0'.format(*m))
     screen1.config(bg='white')
 
     Label(screen1,text='Awikwok',bg='white', font=('Calibri(body)',50,'bold')).pack(expand=True)
 
     screen1.mainloop()
+    
+
 
 #===================================================================
 #GUI login screen
