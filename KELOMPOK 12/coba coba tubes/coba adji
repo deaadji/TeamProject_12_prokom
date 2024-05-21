@@ -1,0 +1,22 @@
+import csv
+
+def check_login(username, password):
+    with open('users.csv', 'r') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            if username == row[0] and password == row[1]:
+                print("Login berhasil!")
+                return True  # Login success
+    print("Username atau password salah.")
+    return False  # Login failed
+
+# Main program flow
+username = input("Masukkan username: ")
+password = input("Masukkan password: ")
+
+if check_login(username, password):
+    # Access granted or perform other actions after successful login
+    pass
+else:
+    # Handle invalid login or implement additional steps
+    pass

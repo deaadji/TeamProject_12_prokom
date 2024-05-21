@@ -9,7 +9,10 @@ root.geometry('900x500')
 root.configure(bg="#fff")
 root.resizable(False,False)
 
-#fungsi utama login screen
+#===================================================
+#fungsi utama login screen jadiiiiiiii UWOGHHHHH ^0^
+#===================================================
+
 def login_CMD():
     usernama=username.get()
     paswed=password.get()
@@ -17,25 +20,15 @@ def login_CMD():
     with open("users.csv", mode="r") as f:
         reader = csv.reader(f,delimiter=",")
         for row in reader:
-            if row == [usernama,paswed]:
+            if usernama == row[0] and paswed == row[1]:
                 Main_menu()
-            elif row!= [usernama,paswed]:
-                messagebox.showerror("Tidak Ditemukan","Username dan/atau Password salah. pastikan kapital dan spasi tepat")
+                return True
+    messagebox.showerror("Tidak Ditemukan","Username dan/atau Password salah. pastikan kapital dan spasi tepat")
+    return False 
 
-
-    if usernama=='admoon' and paswed=='halo dunia':
-        Main_menu()
-    elif usernama!='admoon' and paswed!='halo dunia':
-        messagebox.showerror("Tidak Ditemukan","Username dan/atau Password salah. pastikan kapital dan spasi tepat")
-    elif usernama!='admoon':
-        messagebox.showerror("Tidak Ditemukan","Username salah. pastikan kapital dan spasi tepat")
-    elif paswed!='halo dunia':
-        messagebox.showerror("Tidak Ditemukan","Password salah. pastikan kapital dan spasi tepat")
-
-
-#=====================================================================================
-#main menu tapi blom jadi 
-
+#====================================================================
+#main menu //////tapi blom jadi 
+#====================================================================
 
 def Main_menu():
     screen1=Toplevel(root)
@@ -86,11 +79,7 @@ def register():
           
     daftar=Button(daftar_screen,width=16,text='DAFTAR',border=0,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'), command=daftar_fungsi)
     daftar.place(x=244,y=370)
-        #print("Registration is succesful!")
-        ##   print("Please try again!")
     
-
-
 
 #===================================================================
 #GUI login screen
