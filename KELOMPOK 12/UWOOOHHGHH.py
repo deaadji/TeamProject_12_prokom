@@ -44,12 +44,9 @@ def Main_menu():
     screen1.geometry('{}x{}+0+0'.format(*m))
     screen1.config(bg='white')
 
-    Label(screen1,text='Awikwok',bg='white', font=('Calibri(body)',50,'bold')).pack(expand=True)
+    Label(screen1,text='Hello world',bg='white', font=('Calibri(body)',50,'bold')).pack(expand=True)
 
     screen1.mainloop()
-
-
-
 
 
 
@@ -61,50 +58,34 @@ def register():
     daftar_screen.title("DAFTAR")
     daftar_screen.geometry('625x500')
     daftar_screen.config(bg='white')
-
-    def on_enter(e):
-        username_daftar.delete(0, "end")
-
-    def on_leave(e):
-        name=username_daftar.get()
-        if name=='':
-            username_daftar.insert(0,'Tulis Username Anda')
     
-    Frame(daftar_screen,width=300,height=2,bg='black').place(x=165,y=270)
-    Frame(daftar_screen,width=300,height=2,bg='black').place(x=165,y=340)
+    Frame(daftar_screen,width=280,height=2,bg='black').place(x=165,y=270)
+    Frame(daftar_screen,width=280,height=2,bg='black').place(x=165,y=340)
 
-    username_daftar = Entry(daftar_screen,width=25,fg='grey',border=0,bg='white',font=('Microsoft YaHei UI Light',13))
+    username_daftar = Entry(daftar_screen,width=25,fg='white',border=0,bg='grey',font=('Microsoft YaHei UI Light',13))
     username_daftar.place(x=180,y=240)
-    username_daftar.insert(0,'Tulis Username Anda')
-    username_daftar.bind('<FocusIn>', on_enter)
-    username_daftar.bind('<FocusOut>', on_leave)
-
-    def on_enter(e):
-        password_daftar.delete(0, "end")
-
-    def on_leave(e):
-        name=password_daftar_daftar.get()
-        if name=='':
-            password_daftar.insert(0,'Tulis Password Anda')
-    password_daftar = Entry(daftar_screen,width=25,fg='grey',border=0,bg='white',font=('Microsoft YaHei UI Light',13))
+    username_daftar.insert(0,'')
+    
+    password_daftar = Entry(daftar_screen,width=25,fg='white',border=0,bg='grey',font=('Microsoft YaHei UI Light',13))
     password_daftar.place(x=180,y=310)
-    password_daftar.insert(0,'Tulis Password Anda')
-    password_daftar.bind('<FocusIn>', on_enter)
-    password_daftar.bind('<FocusOut>', on_leave)
-
-    with open("users.csv", mode="a", newline="") as f:
-        writer = csv.writer(f,delimiter=",")
-        email= "admoon"
-        passuword = "halo dunia"
-        def daftar_fungsi():
-            if username=="":
-                messagebox.showerror("Invalid","Masukan Username dan Password terlebih dahulu")
-            elif password=="":
-                messagebox.showerror("Invalid","Masukan Username dan Password terlebih dahulu")
+    password_daftar.insert(0,'')
+   
+    def daftar_fungsi():
+            usernama_daftar=username_daftar.get()
+            paswed_daftar=password_daftar.get()
+            if usernama_daftar=="":
+                messagebox.showerror("Invalid","Masukan Username dan Password terlebih dahulu", master=daftar_screen)
+            elif paswed_daftar=="":
+                messagebox.showerror("Invalid","Masukan Username dan Password terlebih dahulu",master=daftar_screen)
             else:
-                writer.writerow(email,passuword)
-        daftar=Button(daftar_screen,width=16,text='DAFTAR',border=0,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'), command=daftar_fungsi)
-        daftar.place(x=244,y=370)
+                with open("users.csv", mode="a", newline="") as f:
+                    writer = csv.writer(f,delimiter=",")
+                    writer.writerow([usernama_daftar, paswed_daftar])
+            messagebox.showinfo('Sukses!','Akun username dan Password baru sudah terdaftar')
+            daftar_screen.destroy()
+          
+    daftar=Button(daftar_screen,width=16,text='DAFTAR',border=0,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'), command=daftar_fungsi)
+    daftar.place(x=244,y=370)
         #print("Registration is succesful!")
         ##   print("Please try again!")
     
