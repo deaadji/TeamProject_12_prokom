@@ -1,0 +1,54 @@
+import csv
+from datetime import datetime, timedelta
+
+def write_current_datetime(filename):
+  """Writes the current date and time to a CSV file.
+
+  Args:
+    filename (str): The name of the CSV file to write to.
+  """
+
+  with open(filename, 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(['Date', 'Time'])
+
+    current_datetime = datetime.now()
+    writer.writerow([current_datetime.strftime("%Y-%m-%d"), current_datetime.strftime("%H:%M:%S")])
+
+def calculate_elapsed_time(filename):
+  """Calculates the elapsed time since the date and time stored in the CSV file.
+
+  Args:
+    filename (str): The name of the CSV file to read from.
+
+  Returns:
+    tuple: A tuple containing (hours, minutes, seconds) elapsed.
+  """
+
+  with open(filename, 'r') as csvfile:
+    reader = csv.reader(csvfile)
+    next(reader)  # Skip header row
+
+    for row in reader:
+      date_str, time_str = row
+      datetime_stored = datetime.strptime(f"{date_str} {time_str}", "%Y-%m-%d %H:%M:%S")
+      break  # Assuming only one row of data
+
+  now = datetime.now()
+  elapsed = now - datetime_stored
+  hours = elapsed.seconds // 3600
+  minutes = (elapsed.seconds % 3600) // 60
+  seconds = elapsed.seconds % 60
+  return hours, minutes, seconds
+
+if __name__ == '__main__':
+  filename = 'baru_data_waktu.csv'
+
+  # Write current date and time
+  write_current_datetime(filename)
+  print(f"Current date and time written to {filename}")
+
+  # Calculate and display elapsed time
+  elapsed_hours, elapsed_minutes, elapsed_seconds = calculate_elapsed_time(filename)
+  print(f"\nElapsed time since data was stored:")
+  print(f"{elapsed_hours} hours, {elapsed_minutes} minutes, {elapsed_seconds} seconds")
