@@ -1,0 +1,53 @@
+import tkinter as tk
+from tkinter import messagebox
+
+info_about = (
+    "Si Jago Parkir\n"
+    "Developer:\n"
+    "1. Developer A\n"
+    "2. Developer B\n"
+    "3. Developer C\n"
+    "Created: xx xx 2024\n"
+    "Description:\n"
+    "Sistem Parkir Otomatis\n"
+    )
+
+def show_about():
+    for widget in main_frame.winfo_children():
+        widget.destroy()
+    
+    about_label = tk.Label(main_frame, text=info_about, font=("Microsoft YaHei UI Light", 16), bg="white")
+    about_label.pack(expand=True)
+
+root = tk.Tk()
+root.geometry("900x500")
+root.title("Si Jago Parkir")
+
+options_frame = tk.Frame(root, bg="White")
+
+home_btn = tk.Button(options_frame, text="Home", font=("Microsoft YaHei UI Light", 13), fg="Red", bd=0, bg="White")
+home_btn.place(x=20, y=50)
+home_indicate = tk.Label(options_frame, text="", bg="Red")
+home_indicate.place(x=3, y=50, width=5, height=40)
+
+menu_btn = tk.Button(options_frame, text="Menu", font=("Microsoft YaHei UI Light", 13), fg="Red", bd=0, bg="White")
+menu_btn.place(x=20, y=100)
+menu_indicate = tk.Label(options_frame, text="", bg="Red")
+menu_indicate.place(x=3, y=100, width=5, height=40)
+
+about_btn = tk.Button(options_frame, text="About", font=("Microsoft YaHei UI Light", 13), fg="Red", bd=0, bg="White", command=show_about)
+about_btn.place(x=20, y=150)
+menu_indicate = tk.Label(options_frame, text="", bg="Red")
+menu_indicate.place(x=3, y=150, width=5, height=40)
+
+options_frame.pack(side=tk.LEFT)
+options_frame.pack_propagate(False)
+options_frame.configure(width=100, height=500)
+
+main_frame = tk.Frame(root, highlightbackground= "black", highlightthickness=2)
+
+main_frame.pack(side=tk.LEFT)
+main_frame.pack_propagate(False)
+main_frame.configure(height=500, width=900)
+
+root.mainloop()
