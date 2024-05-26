@@ -83,7 +83,7 @@ def register():
 
 
 #bug disini, janlup directory nya
-gambar_kiri=PhotoImage(file='KELOMPOK 12/LOGO LOGIN.png')
+gambar_kiri=PhotoImage(file='TeamProject_12_prokom/KELOMPOK 12/LOGO LOGIN.png')
 
 frame=Frame(root,width=350,height=350,bg='white')
 frame.place(x=480,y=70)

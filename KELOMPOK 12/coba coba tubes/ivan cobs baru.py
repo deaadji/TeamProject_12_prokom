@@ -148,14 +148,26 @@ password.insert(0, 'Tulis Password Anda')
 password.bind('<FocusIn>', on_enter_password)
 password.bind('<FocusOut>', on_leave_password)
 
+# Checkbox to toggle password visibility
+show_password_var = tk.IntVar()
+
+def toggle_password():
+    if show_password_var.get():
+        password.config(show='')
+    else:
+        password.config(show='*')
+
+show_password_check = tk.Checkbutton(frame, text="Show Password", variable=show_password_var, onvalue=1, offvalue=0, command=toggle_password, bg='white', fg='grey', font=('Microsoft YaHei UI Light', 9))
+show_password_check.place(x=30, y=170)
+
 tk.Frame(frame, width=300, height=2, bg='black').place(x=25, y=110)
-tk.Frame(frame, width=300, height=2, bg='black').place(x=25, y=170)
-tk.Button(frame, width=39, pady=7, text='sign in', bg='#de2b28', cursor='hand2', fg='white', border=0, command=login_CMD).place(x=35, y=205)
+tk.Frame(frame, width=300, height=2, bg='black').place(x=25, y=190)
+tk.Button(frame, width=39, pady=7, text='sign in', bg='#de2b28', cursor='hand2', fg='white', border=0, command=login_CMD).place(x=35, y=215)
 
 akun_label = tk.Label(frame, text='Tidak memiliki akun SI JAGO PARKIR?', fg='black', bg='white', font=('Microsoft YaHei UI Light', 9))
-akun_label.place(x=62, y=250)
+akun_label.place(x=62, y=260)
 daftar_button = tk.Button(frame, width=16, text='Daftar sekarang!', border=0, bg='white', cursor='hand2', font=('Microsoft YaHei UI Light', 8, 'bold'), command=register)
-daftar_button.place(x=110, y=270)
+daftar_button.place(x=110, y=280)
 
 copy_label = tk.Label(root, text='Kelompok 12 Nexus Copyright @2024', fg='navy', border=0, bg='white', font=('Microsoft YaHei UI Light', 9, 'italic'))
 copy_label.place(x=350, y=420)
