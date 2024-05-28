@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 root = tk.Tk()
 root.wm_title('SI JAGO PARKIR')
-root.geometry('900x500')
+root.geometry('900x500+168+156')
 root.configure(bg="#fff")
 root.resizable(False,False)
 
@@ -164,13 +164,16 @@ copy.place(x=330,y=420)
 #-- MAIN MENU --
 #===============================================================
 def Main_menu():
+    #untuk hide login screen
+    root.withdraw()
     screen1=Toplevel(root)
     screen1.title("MAIN MENU")
     m = screen1.maxsize()
     screen1.geometry('{}x{}+0+0'.format(*m))
     screen1.config(bg='white')
+    screen1.overrideredirect(True)
 
-    about_btn = tk.Button(screen1, text="about", font=("century gothic", 25), fg="Red", bd=0, bg="White")
+    about_btn = tk.Button(screen1, text="about", font=("century gothic", 25), fg="Red", bd=0, bg="White", command=ini_about)
     about_btn.place(x=20, y=165)
 
     menu_indicate = tk.Label(screen1, text="", bg="Red")
@@ -248,33 +251,35 @@ def ngasi_waktu_tanggal():
 def Kendaraan_baru():
     nambah_screen=Toplevel(root)
     nambah_screen.title("KENDARAAN BARU")
-    nambah_screen.geometry('880x480+168+156')
-    nambah_screen.configure(bg="#fff")
+    nambah_screen.geometry('880x480+158+130')
+    nambah_screen.configure(bg="white")
     nambah_screen.resizable(False,False)
     nambah_screen.overrideredirect(True)
 
-    inp_nopol = Entry(nambah_screen,width=25,fg='grey',border=0,bg='white',font=('Microsoft YaHei UI Light',13))
+    inp_nopol = Entry(nambah_screen,width=25,fg='black',border=0,bg='grey',font=('Microsoft YaHei UI Light',13))
     inp_nopol.place(x=30,y=140)
+
+    tk.Label(nambah_screen, text='DISINI KENDARAAN MASUK', bg='white', font=('Calibri', 20)).pack(pady=20)
 
 def parkir():
     parkir_screen=Toplevel(root)
     parkir_screen.title("KENDARAAN KELUAR DAN CEJ")
-    parkir_screen.geometry('880x480+168+156')
-    parkir_screen.configure(bg="#fff")
+    parkir_screen.geometry('880x480+158+130')
+    parkir_screen.configure(bg="red")
     parkir_screen.resizable(False,False)
     parkir_screen.overrideredirect(True)
 
-    tk.Label(parkir_screen, text='Fitur Parkir (Placeholder)', bg='white', font=('Calibri', 20)).pack(pady=20)
+    tk.Label(parkir_screen, text='DISINI KENDARAAN KELUAR', bg='white', font=('Calibri', 20)).pack(pady=20)
 
 def laporan():
     laporan_screen=Toplevel(root)
     laporan_screen.title("CEK KAPASITAS")
-    laporan_screen.geometry('880x480+168+156')
-    laporan_screen.configure(bg="#fff")
+    laporan_screen.geometry('880x480+158+130')
+    laporan_screen.configure(bg="white")
     laporan_screen.resizable(False,False)
     laporan_screen.overrideredirect(True)
 
-    tk.Label(laporan_screen, text='CEK KAP', bg='white', font=('Calibri', 20)).pack(pady=20)
+    tk.Label(laporan_screen, text='DISINI KAPASITASNYA SEGINI', bg='white', font=('Calibri', 20)).pack(pady=20)
 
 def confirm_exit():
     response = messagebox.askyesno("Konfirmasi Keluar", "Apakah Anda yakin ingin keluar?")
@@ -282,15 +287,31 @@ def confirm_exit():
         root.destroy()
 
 
+def ini_about():
+    abot_bosku=Toplevel(root)
+    abot_bosku.title("CEK KAPASITAS")
+    abot_bosku.geometry('880x480+158+130')
+    abot_bosku.configure(bg="#fff")
+    abot_bosku.resizable(False,False)
+    abot_bosku.overrideredirect(True)
+
+    about_label = Label(abot_bosku, text=info_about, font=("Microsoft YaHei UI Light", 16), bg="white")
+    about_label.pack()
+
 info_about = (
     "Si Jago Parkir\n"
-    "Developer:\n"
-    "1. Developer A\n"
-    "2. Developer B\n"
-    "3. Developer C\n"
-    "Created: xx xx 2024\n"
-    "Description:\n"
-    "Sistem Parkir Otomatis\n"
+    "Developer: Kelompok 12 Nexus 2023\n"
+    " \n"
+    "MAINFRAME DEVELOPER\n"
+    "Adji Kusuma\n"
+    " \n"
+    "CODE SUPERVISOR \n"
+    "Ivan vadilah\n"
+    " \n"
+    "BACKEND FRAME BUILDER\n"
+    "Irma Arisa\n"
+    " \n"
+    "Copyright @2024 Kelompok 12 Nexus\n"
     )
 
 
