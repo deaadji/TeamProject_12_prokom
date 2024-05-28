@@ -27,6 +27,7 @@ def login_CMD():
     messagebox.showerror("Tidak Ditemukan","Username dan/atau Password salah. pastikan kapital dan spasi tepat")
     return False 
 
+
 #=======================================================
 # MAIN REGISTER WINDOW
 
@@ -80,6 +81,7 @@ def register():
     tulis_username.place(x=172,y=195)
     tulis_password=Label(daftar_screen,text='Password :',fg='black',bg='white',font=('Microsoft YaHei UI Light',9))
     tulis_password.place(x=172,y=265)
+
 
 #===================================================================
 #GUI login screen
@@ -156,10 +158,11 @@ daftar.place(x=110,y=270)
 copy=Label(root,text='Kelompok 12 Nexus Copyright @2024',fg='navy',border=0,bg='white',font=('Microsoft YaHei UI Light',9,'italic'))
 copy.place(x=330,y=420)
 
-#====================================================================
-#main menu ////// tapi blom jadi 
 
 
+#===============================================================
+#-- MAIN MENU --
+#===============================================================
 def Main_menu():
     screen1=Toplevel(root)
     screen1.title("MAIN MENU")
@@ -167,36 +170,30 @@ def Main_menu():
     screen1.geometry('{}x{}+0+0'.format(*m))
     screen1.config(bg='white')
 
-    home_btn = tk.Button(screen1, text="Cek", font=("century gothic", 25), fg="Red", bd=0, bg="White")
-    home_btn.place(x=20, y=95)
-
-    home_indicate = tk.Label(screen1, text="", bg="Red")
-    home_indicate.place(x=3, y=108, width=5, height=40)
-
     about_btn = tk.Button(screen1, text="about", font=("century gothic", 25), fg="Red", bd=0, bg="White")
     about_btn.place(x=20, y=165)
 
     menu_indicate = tk.Label(screen1, text="", bg="Red")
     menu_indicate.place(x=3, y=179, width=5, height=40)
 
-    exit_btn = tk.Button(screen1, text="Keluar", font=("century gothic", 25), fg="Red", bd=0, bg="White", command=root.destroy)
+    exit_btn = tk.Button(screen1, text="Keluar", font=("century gothic", 25), fg="Red", bd=0, bg="White", command=confirm_exit)
     exit_btn.place(x=20, y=228)
 
     menu_indicate = tk.Label(screen1, text="", bg="Red")
     menu_indicate.place(x=3, y=245, width=5, height=40)
 
-    pil1_btn = tk.Button(screen1, text='Tambah', fg='white', width=45, height=10, bd=0, bg="red", command=Kendaraan_baru)
-    pil1_btn.place(x=1140, y=30)
+    masuk_btn = tk.Button(screen1, text='Kendaraan masuk', fg='white', width=45, height=10, bd=0, bg="red", command=Kendaraan_baru)
+    masuk_btn.place(x=1140, y=30)
 
-    pil2_btn = tk.Button(screen1, text='keluar', fg='white', width=45, height=10, bd=0, bg="red", command=parkir)
-    pil2_btn.place(x=1140, y=280)
+    keluar_btn = tk.Button(screen1, text='Kendaraan keluar dan CEK', fg='white', width=45, height=10, bd=0, bg="red", command=parkir)
+    keluar_btn.place(x=1140, y=280)
 
-    pil3_btn = tk.Button(screen1,text='cek kapasitas', fg='white', width=45, height=10, bd=0, bg="red",command=laporan)
-    pil3_btn.place(x=1140, y=550)
+    cek_btn = tk.Button(screen1,text='cek kapasitas', fg='white', width=45, height=10, bd=0, bg="red",command=laporan)
+    cek_btn.place(x=1140, y=550)
 
     layar_gede = tk.Frame(screen1, highlightbackground= "black", highlightthickness=5,bg="white")
 
-    layar_gede.place(x=160,y=120)
+    layar_gede.place(x=150,y=118)
     layar_gede.pack_propagate(False)
     layar_gede.configure(height=500, width=900)
 
@@ -206,9 +203,10 @@ def Main_menu():
 
     screen1.mainloop()
 
+
 #==========================================================
 #fungsi waktu, demi masa, wal-ashr
-
+#==========================================================
 def write_current_datetime(filename):
   with open(filename, 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
@@ -234,7 +232,7 @@ def calculate_elapsed_time(filename):
   seconds = elapsed.seconds % 60
   return hours, minutes, seconds
 
-filename = 'baru_data_waktu.csv'
+filename = 'MAIN_data_waktu.csv'
 def nulis_waktu_tanggal():
     write_current_datetime(filename)
 
@@ -243,30 +241,45 @@ def ngasi_waktu_tanggal():
     print(f"\nElapsed time since data was stored:")
     print(f"{elapsed_hours} hours, {elapsed_minutes} minutes, {elapsed_seconds} seconds")
 
+
 #======================================================
 #fungsi-fungsi main menu
-
+#======================================================
 def Kendaraan_baru():
     nambah_screen=Toplevel(root)
-    nambah_screen.title("Tambah Kendaraan")
-    nambah_screen.geometry('800x500+0+0')
-    nambah_screen.config(bg='white')
+    nambah_screen.title("KENDARAAN BARU")
+    nambah_screen.geometry('880x480+168+156')
+    nambah_screen.configure(bg="#fff")
+    nambah_screen.resizable(False,False)
+    nambah_screen.overrideredirect(True)
+
+    inp_nopol = Entry(nambah_screen,width=25,fg='grey',border=0,bg='white',font=('Microsoft YaHei UI Light',13))
+    inp_nopol.place(x=30,y=140)
 
 def parkir():
-    parkir_screen = tk.Toplevel(root)
-    parkir_screen.title("Parkir")
-    parkir_screen.geometry('600x400')
-    parkir_screen.config(bg='white')
+    parkir_screen=Toplevel(root)
+    parkir_screen.title("KENDARAAN KELUAR DAN CEJ")
+    parkir_screen.geometry('880x480+168+156')
+    parkir_screen.configure(bg="#fff")
+    parkir_screen.resizable(False,False)
+    parkir_screen.overrideredirect(True)
 
     tk.Label(parkir_screen, text='Fitur Parkir (Placeholder)', bg='white', font=('Calibri', 20)).pack(pady=20)
 
 def laporan():
-    laporan_screen = tk.Toplevel(root)
-    laporan_screen.title("Laporan")
-    laporan_screen.geometry('600x400')
-    laporan_screen.config(bg='white')
+    laporan_screen=Toplevel(root)
+    laporan_screen.title("CEK KAPASITAS")
+    laporan_screen.geometry('880x480+168+156')
+    laporan_screen.configure(bg="#fff")
+    laporan_screen.resizable(False,False)
+    laporan_screen.overrideredirect(True)
 
-    tk.Label(laporan_screen, text='Fitur Laporan (Placeholder)', bg='white', font=('Calibri', 20)).pack(pady=20)
+    tk.Label(laporan_screen, text='CEK KAP', bg='white', font=('Calibri', 20)).pack(pady=20)
+
+def confirm_exit():
+    response = messagebox.askyesno("Konfirmasi Keluar", "Apakah Anda yakin ingin keluar?")
+    if response:
+        root.destroy()
 
 
 info_about = (
@@ -282,6 +295,8 @@ info_about = (
 
 
 root.mainloop() 
+
+
 
 #⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀ 
 #⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⠀⠀⠀⠀ 
