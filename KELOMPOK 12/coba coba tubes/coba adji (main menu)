@@ -13,19 +13,19 @@ def Main_menu():
     screen1.geometry('{}x{}+0+0'.format(*m))
     screen1.config(bg='white')
 
-    home_btn = tk.Button(screen1, text="Home", font=("century gothic", 25), fg="Red", bd=0, bg="White")
+    home_btn = tk.Button(screen1, text="Cek", font=("century gothic", 25), fg="Red", bd=0, bg="White")
     home_btn.place(x=20, y=95)
 
     home_indicate = tk.Label(screen1, text="", bg="Red")
     home_indicate.place(x=3, y=108, width=5, height=40)
 
-    menu_btn = tk.Button(screen1, text="Menu", font=("century gothic", 25), fg="Red", bd=0, bg="White")
+    menu_btn = tk.Button(screen1, text="about", font=("century gothic", 25), fg="Red", bd=0, bg="White")
     menu_btn.place(x=20, y=165)
 
     menu_indicate = tk.Label(screen1, text="", bg="Red")
     menu_indicate.place(x=3, y=179, width=5, height=40)
 
-    about_btn = tk.Button(screen1, text="About", font=("century gothic", 25), fg="Red", bd=0, bg="White")
+    about_btn = tk.Button(screen1, text="Keluar", font=("century gothic", 25), fg="Red", bd=0, bg="White")
     about_btn.place(x=20, y=228)
 
     menu_indicate = tk.Label(screen1, text="", bg="Red")
@@ -40,11 +40,11 @@ def Main_menu():
     pil3_btn = tk.Button(screen1, width=45, height=10, bd=0, bg="red")
     pil3_btn.place(x=1140, y=550)
 
-    main_frame = tk.Frame(screen1, highlightbackground= "black", highlightthickness=5)
+    layar_gede = tk.Frame(screen1, highlightbackground= "black", highlightthickness=5,bg="white")
 
-    main_frame.place(x=150,y=120)
-    main_frame.pack_propagate(False)
-    main_frame.configure(height=500, width=900)
+    layar_gede.place(x=160,y=120)
+    layar_gede.pack_propagate(False)
+    layar_gede.configure(height=500, width=900)
 
 Button(root,width=39,pady=7,text='sign in',bg='#de2b28',cursor='hand2',fg='white',border=0,command=Main_menu).place(x=35,y=205)
 

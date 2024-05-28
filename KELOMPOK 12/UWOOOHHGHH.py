@@ -18,7 +18,7 @@ def login_CMD():
     usernama=username.get()
     paswed=password.get()
 
-    with open("users.csv", mode="r") as f:
+    with open("users_akun.csv", mode="r") as f:
         reader = csv.reader(f,delimiter=",")
         for row in reader:
             if usernama == row[0] and paswed == row[1]:
@@ -51,19 +51,23 @@ def register():
             usernama_daftar=username_daftar.get()
             paswed_daftar=password_daftar.get()
             #kalo paswed dan user ada di data
-            with open("users.csv", mode="r") as f:
+            with open("users_akun.csv", mode="r") as f:
                 reader = csv.reader(f,delimiter=",")
                 for row in reader:
                     if usernama_daftar == row[0] and paswed_daftar == row[1]:
                         messagebox.showerror("Invalid","Username dan Password sudah terdaftar",master=daftar_screen)
                         return True
+                    else :
+                        break
             #fungsi utama
-            if usernama_daftar=="":
+            if usernama_daftar=="" and paswed_daftar=="":
                 messagebox.showerror("Invalid","Masukan Username dan Password terlebih dahulu", master=daftar_screen)
             elif paswed_daftar=="":
                 messagebox.showerror("Invalid","Masukan Username dan Password terlebih dahulu",master=daftar_screen)
-            else:
-                with open("users.csv", mode="a", newline="") as f:
+            elif usernama_daftar=="":
+                messagebox.showerror("Invalid","Masukan Username dan Password terlebih dahulu",master=daftar_screen)
+            elif True :
+                with open("users_akun.csv", mode="a", newline="") as f:
                     writer = csv.writer(f,delimiter=",")
                     writer.writerow([usernama_daftar, paswed_daftar])
             messagebox.showinfo('Sukses!','Akun username dan Password baru sudah terdaftar')
@@ -83,7 +87,11 @@ def register():
 
 
 #bug disini, janlup directory nya
-gambar_kiri=PhotoImage(file='KELOMPOK 12/LOGO LOGIN.png')
+try:
+    gambar_kiri = PhotoImage(file='KELOMPOK 12/LOGO LOGIN.png')
+    tk.Label(root, image=gambar_kiri, bg='white').place(x=-5, y=-50)
+except tk.TclError:
+    print("Image file not found. Check the path to 'LOGO LOGIN.png'.")
 
 frame=Frame(root,width=350,height=350,bg='white')
 frame.place(x=480,y=70)
@@ -92,34 +100,38 @@ Label(root,image=gambar_kiri,bg='white').place(x=-5,y=-50)
 masuk=Label(frame,text='Masuk',fg='red',bg='white',font=('century gothic',23))
 masuk.place(x=125,y=10)
 
-def on_enter(e):
-    username.delete(0, "end")
+def on_enter_username(e):
+    if username.get() == 'Tulis Username Anda':
+        username.delete(0, "end")
+        username.config(fg='black')
 
-def on_leave(e):
-    name=username.get()
-    if name=='':
-        username.insert(0,'Tulis Username Anda')
-    
+def on_leave_username(e):
+    if not username.get():
+        username.insert(0, 'Tulis Username Anda')
+        username.config(fg='grey')
         
+
 username = Entry(frame,width=25,fg='grey',border=0,bg='white',font=('Microsoft YaHei UI Light',13))
 username.place(x=30,y=80)
 username.insert(0,'Tulis Username Anda')
-username.bind('<FocusIn>', on_enter)
-username.bind('<FocusOut>', on_leave)
+username.bind('<FocusIn>', on_enter_username)
+username.bind('<FocusOut>', on_leave_username)
 
-def on_enter(e):
-    password.delete(0, "end")
+def on_enter_password(e):
+    if password.get() == 'Tulis Password Anda':
+        password.delete(0, "end")
+        password.config(fg='black', show='*')
 
-def on_leave(e):
-    name=password.get()
-    if name=='':
-        password.insert(0,'Tulis Password Anda')
+def on_leave_password(e):
+    if not password.get():
+        password.insert(0, 'Tulis Password Anda')
+        password.config(fg='grey', show='')
 
 password = Entry(frame,width=25,fg='grey',border=0,bg='white',font=('Microsoft YaHei UI Light',13))
 password.place(x=30,y=140)
 password.insert(0,'Tulis Password Anda')
-password.bind('<FocusIn>', on_enter)
-password.bind('<FocusOut>', on_leave)
+password.bind('<FocusIn>', on_enter_password)
+password.bind('<FocusOut>', on_leave_password)
 
 Frame(frame,width=300,height=2,bg='black').place(x=25,y=110)
 Frame(frame,width=300,height=2,bg='black').place(x=25,y=170)
@@ -138,50 +150,52 @@ copy.place(x=330,y=420)
 
 def Main_menu():
     screen1=Toplevel(root)
-    screen1.title("woke")
+    screen1.title("MAIN MENU")
     m = screen1.maxsize()
     screen1.geometry('{}x{}+0+0'.format(*m))
     screen1.config(bg='white')
 
-
-    home_btn = tk.Button(screen1, text="Home", font=("Microsoft YaHei UI Light", 25), fg="Red", bd=0, bg="White")
+    home_btn = tk.Button(screen1, text="Cek", font=("century gothic", 25), fg="Red", bd=0, bg="White")
     home_btn.place(x=20, y=95)
 
     home_indicate = tk.Label(screen1, text="", bg="Red")
-    home_indicate.place(x=3, y=105, width=5, height=40)
+    home_indicate.place(x=3, y=108, width=5, height=40)
 
-    menu_btn = tk.Button(screen1, text="Menu", font=("Microsoft YaHei UI Light", 25), fg="Red", bd=0, bg="White")
-    menu_btn.place(x=20, y=165)
-
-    menu_indicate = tk.Label(screen1, text="", bg="Red")
-    menu_indicate.place(x=3, y=155, width=5, height=40)
-
-    about_btn = tk.Button(screen1, text="About", font=("Microsoft YaHei UI Light", 25), fg="Red", bd=0, bg="White")
-    about_btn.place(x=20, y=225)
+    about_btn = tk.Button(screen1, text="about", font=("century gothic", 25), fg="Red", bd=0, bg="White")
+    about_btn.place(x=20, y=165)
 
     menu_indicate = tk.Label(screen1, text="", bg="Red")
-    menu_indicate.place(x=3, y=205, width=5, height=40)
+    menu_indicate.place(x=3, y=179, width=5, height=40)
 
-    pil1_btn = tk.Button(screen1, width=45, height=10, bd=0, bg="red")
+    exit_btn = tk.Button(screen1, text="Keluar", font=("century gothic", 25), fg="Red", bd=0, bg="White", command=root.destroy)
+    exit_btn.place(x=20, y=228)
+
+    menu_indicate = tk.Label(screen1, text="", bg="Red")
+    menu_indicate.place(x=3, y=245, width=5, height=40)
+
+    pil1_btn = tk.Button(screen1, text='Tambah', fg='white', width=45, height=10, bd=0, bg="red", command=Kendaraan_baru)
     pil1_btn.place(x=1140, y=30)
 
-    pil2_btn = tk.Button(screen1, width=45, height=10, bd=0, bg="red")
+    pil2_btn = tk.Button(screen1, text='keluar', fg='white', width=45, height=10, bd=0, bg="red", command=parkir)
     pil2_btn.place(x=1140, y=280)
 
-    pil3_btn = tk.Button(screen1, width=45, height=10, bd=0, bg="red")
+    pil3_btn = tk.Button(screen1,text='cek kapasitas', fg='white', width=45, height=10, bd=0, bg="red",command=laporan)
     pil3_btn.place(x=1140, y=550)
 
-    main_frame = tk.Frame(screen1, highlightbackground= "black", highlightthickness=5)
+    layar_gede = tk.Frame(screen1, highlightbackground= "black", highlightthickness=5,bg="white")
 
-    main_frame.place(x=150,y=120)
-    main_frame.pack_propagate(False)
-    main_frame.configure(height=500, width=900)
+    layar_gede.place(x=160,y=120)
+    layar_gede.pack_propagate(False)
+    layar_gede.configure(height=500, width=900)
+
+    def show_about():
+        about_label = tk.Label(screen1, text=info_about, font=("Microsoft YaHei UI Light", 16), bg="white")
+        about_label.pack(expand=True)
 
     screen1.mainloop()
 
-
 #==========================================================
-#fungsi waktu, demi waktu, wal-ashr
+#fungsi waktu, demi masa, wal-ashr
 
 def write_current_datetime(filename):
   with open(filename, 'w', newline='') as csvfile:
@@ -211,12 +225,49 @@ def calculate_elapsed_time(filename):
 filename = 'baru_data_waktu.csv'
 def nulis_waktu_tanggal():
     write_current_datetime(filename)
-    print(f"Current date and time written to {filename}")
 
 def ngasi_waktu_tanggal():
     elapsed_hours, elapsed_minutes, elapsed_seconds = calculate_elapsed_time(filename)
     print(f"\nElapsed time since data was stored:")
     print(f"{elapsed_hours} hours, {elapsed_minutes} minutes, {elapsed_seconds} seconds")
+
+#======================================================
+#fungsi-fungsi main menu
+
+def Kendaraan_baru():
+    nambah_screen=Toplevel(root)
+    nambah_screen.title("Tambah Kendaraan")
+    nambah_screen.geometry('800x500+0+0')
+    nambah_screen.config(bg='white')
+
+def parkir():
+    parkir_screen = tk.Toplevel(root)
+    parkir_screen.title("Parkir")
+    parkir_screen.geometry('600x400')
+    parkir_screen.config(bg='white')
+
+    tk.Label(parkir_screen, text='Fitur Parkir (Placeholder)', bg='white', font=('Calibri', 20)).pack(pady=20)
+
+def laporan():
+    laporan_screen = tk.Toplevel(root)
+    laporan_screen.title("Laporan")
+    laporan_screen.geometry('600x400')
+    laporan_screen.config(bg='white')
+
+    tk.Label(laporan_screen, text='Fitur Laporan (Placeholder)', bg='white', font=('Calibri', 20)).pack(pady=20)
+
+
+info_about = (
+    "Si Jago Parkir\n"
+    "Developer:\n"
+    "1. Developer A\n"
+    "2. Developer B\n"
+    "3. Developer C\n"
+    "Created: xx xx 2024\n"
+    "Description:\n"
+    "Sistem Parkir Otomatis\n"
+    )
+
 
 root.mainloop() 
 

@@ -52,10 +52,10 @@ def Main_menu():
 def parkir():
     parkir_screen = tk.Toplevel(root)
     parkir_screen.title("Parkir")
-    parkir_screen.geometry('600x400')
+    parkir_screen.geometry('900x500')
     parkir_screen.config(bg='white')
 
-    tk.Label(parkir_screen, text='Fitur Parkir (Placeholder)', bg='white', font=('Calibri', 20)).pack(pady=20)
+    tk.Label(parkir_screen, text='kendaraan keluar', bg='white', font=('Calibri', 20)).pack(pady=20)
 
 def laporan():
     laporan_screen = tk.Toplevel(root)
@@ -63,7 +63,7 @@ def laporan():
     laporan_screen.geometry('600x400')
     laporan_screen.config(bg='white')
 
-    tk.Label(laporan_screen, text='Fitur Laporan (Placeholder)', bg='white', font=('Calibri', 20)).pack(pady=20)
+    tk.Label(laporan_screen, text='cek kapasitas', bg='white', font=('Calibri', 20)).pack(pady=20)
 
 #=======================================================
 # Function for the registration window

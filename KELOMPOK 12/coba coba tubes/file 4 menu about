@@ -44,7 +44,7 @@ options_frame.pack(side=tk.LEFT)
 options_frame.pack_propagate(False)
 options_frame.configure(width=100, height=500)
 
-main_frame = tk.Frame(root, highlightbackground= "black", highlightthickness=2)
+main_frame = tk.Frame(root, highlightbackground= "black", highlightthickness=2,bg='white')
 
 main_frame.pack(side=tk.LEFT)
 main_frame.pack_propagate(False)
