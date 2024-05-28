@@ -133,6 +133,18 @@ password.insert(0,'Tulis Password Anda')
 password.bind('<FocusIn>', on_enter_password)
 password.bind('<FocusOut>', on_leave_password)
 
+# Checkbox to toggle password visibility
+show_password_var = tk.IntVar()
+
+def toggle_password():
+    if show_password_var.get():
+        password.config(show='')
+    else:
+        password.config(show='*')
+
+show_password_check = tk.Checkbutton(frame, text="Show Password", variable=show_password_var, onvalue=1, offvalue=0, command=toggle_password, bg='white', fg='black', font=('Microsoft YaHei UI Light', 10))
+show_password_check.place(x=30, y=170)
+
 Frame(frame,width=300,height=2,bg='black').place(x=25,y=110)
 Frame(frame,width=300,height=2,bg='black').place(x=25,y=170)
 Button(frame,width=39,pady=7,text='sign in',bg='#de2b28',cursor='hand2',fg='white',border=0,command=login_CMD).place(x=35,y=205)
