@@ -1,0 +1,144 @@
+import tkinter as tk
+from tkinter import *
+from tkinter import messagebox
+import csv
+from datetime import datetime, timedelta
+
+# ... (Previous code for login screen and main menu remains the same)
+
+#======================================================
+#fungsi-fungsi main menu
+#======================================================
+
+def Kendaraan_baru():
+    nambah_screen = Toplevel(root)
+    nambah_screen.title("KENDARAAN BARU")
+    nambah_screen.geometry('880x480+158+130')
+    nambah_screen.configure(bg="white")
+    nambah_screen.resizable(False, False)
+    nambah_screen.overrideredirect(True)
+
+    # Input fields for vehicle information
+    nopol_label = Label(nambah_screen, text="Nomor Polisi:", fg="black", bg="white", font=("Microsoft YaHei UI Light", 13))
+    nopol_label.place(x=30, y=100)
+
+    nopol_entry = Entry(nambah_screen, width=25, fg="black", border=0, bg="grey", font=("Microsoft YaHei UI Light", 13))
+    nopol_entry.place(x=160, y=100)
+
+    jenis_label = Label(nambah_screen, text="Jenis Kendaraan:", fg="black", bg="white", font=("Microsoft YaHei UI Light", 13))
+    jenis_label.place(x=30, y=150)
+
+    jenis_options = ["Mobil", "Motor", "Truk"]
+    jenis_var = tk.StringVar(nambah_screen)
+    jenis_var.set(jenis_options[0])  # Set default value to "Mobil"
+
+    jenis_dropdown = tk.OptionMenu(nambah_screen, jenis_var, *jenis_options)
+    jenis_dropdown.place(x=160, y=150)
+
+    # Button to submit vehicle entry
+    submit_button = Button(nambah_screen, text="Submit", fg="white", bg="red", font=("Microsoft YaHei UI Light", 13),
+                          command=lambda: submit_new_vehicle(nopol_entry.get(), jenis_var.get()))
+    submit_button.place(x=330, y=200)
+
+    # Function to process new vehicle entry
+    def submit_new_vehicle(nopol, jenis):
+        # Check if vehicle already exists
+        with open("kendaraan_data.csv", mode="r") as f:
+            reader = csv.reader(f)
+            for row in reader:
+                if row[0] == nopol:
+                    messagebox.showerror("Error", "Nomor polisi sudah terdaftar.")
+                    return
+
+        # Add new vehicle record to CSV file
+        with open("kendaraan_data.csv", mode="a", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow([nopol, jenis, datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
+
+        # Display success message
+        messagebox.showinfo("Success", "Kendaraan baru dengan nomor polisi " + nopol + " telah ditambahkan.")
+
+        # Clear entry fields
+        nopol_entry.delete(0, END)
+
+
+def parkir():
+    parkir_screen = Toplevel(root)
+    parkir_screen.title("KENDARAAN KELUAR DAN CEK")
+    parkir_screen.geometry('880x480+158+130')
+    parkir_screen.configure(bg="white")
+    parkir_screen.resizable(False, False)
+    parkir_screen.overrideredirect(True)
+
+    # Input field for vehicle number plate
+    nopol_label = Label(parkir_screen, text="Nomor Polisi:", fg="black", bg="white", font=("Microsoft YaHei UI Light", 13))
+    nopol_label.place(x=30, y=100)
+
+    nopol_entry = Entry(parkir_screen, width=25, fg="black", border=0, bg="grey", font=("Microsoft YaHei UI Light", 13))
+    nopol_entry.place(x=160, y=100)
+
+    # Button to process vehicle exit
+    cek_button = Button(parkir_screen, text="Cek dan Keluar", fg="white", bg="red", font=("Microsoft YaHei UI Light", 13),
+                        command=lambda: cek_keluar_kendaraan(nopol_entry.get()))
+    cek_button.place(x=330, y=150)
+
+    # Function to process vehicle exit
+    def cek_keluar_kendaraan(nopol):
+        nopol = nopol.upper().strip()
+        if not nopol:
+            messagebox.showerror("Error", "Nomor polisi tidak boleh kosong.")
+            return
+
+        found = False
+        kendaraan_data = []
+        exit_time = datetime.now()
+        fee = 0
+
+        with open("kendaraan_data.csv", "r", newline="") as f:
+            reader = csv.reader(f)
+            for row in reader:
+                if row[0] == nopol:
+                    found = True
+                    entry_time = datetime.strptime(row[2], "%Y-%m-%d %H:%M:%S")
+                    duration = exit_time - entry_time
+                    hours_parked = duration.total_seconds() / 3600
+                    fee = calculate_fee(hours_parked, row[1])
+                else:
+                    kendaraan_data.append(row)
+
+        if found:
+            with open("kendaraan_data.csv", "w", newline="") as f:
+                writer = csv.writer(f)
+                writer.writerows(kendaraan_data)
+            with open("history.csv", "a", newline="") as f:
+                writer = csv.writer(f)
+                writer.writerow([nopol, entry_time.strftime("%Y-%m-%d %H:%M:%S"), exit_time.strftime("%Y-%m-%d %H:%M:%S"), fee])
+            messagebox.showinfo("Success", f"Kendaraan dengan nomor polisi {nopol} telah keluar.\nDurasi parkir: {hours_parked:.2f} jam\nBiaya parkir: Rp {fee}")
+        else:
+            messagebox.showerror("Error", "Nomor polisi tidak ditemukan.")
+
+    def calculate_fee(hours, jenis):
+        if jenis == "Mobil":
+            return 5000 + max(0, (hours - 1)) * 3000
+        elif jenis == "Motor":
+            return 2000 + max(0, (hours - 1)) * 1000
+        elif jenis == "Truk":
+            return 8000 + max(0, (hours - 1)) * 5000
+        else:
+            return 0
+
+def check_file():
+    try:
+        with open('kendaraan_data.csv', 'r') as f:
+            total_kendaraan = sum(1 for row in csv.reader(f))
+
+        with open('stok_lahan_parkir.csv', 'r') as f:
+            stok_lahan = sum(1 for row in csv.reader(f))
+
+        messagebox.showinfo('Info Stok Lahan Parkir', f'Total kendaraan yang terparkir: {total_kendaraan}\nStok lahan parkir tersedia: {stok_lahan}')
+    except FileNotFoundError:
+        messagebox.showerror('Error', 'File tidak ditemukan.')
+
+# Remaining implementation for main menu and login functionalities
+
+root.mainloop()
