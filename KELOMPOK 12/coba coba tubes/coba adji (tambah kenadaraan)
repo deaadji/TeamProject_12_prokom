@@ -1,0 +1,20 @@
+import tkinter as tk
+from tkinter import *
+from tkinter import messagebox
+import csv
+from datetime import datetime, timedelta
+
+nambah_screen=tk.Tk()
+nambah_screen.title("KENDARAAN BARU")
+nambah_screen.geometry('880x480+158+130')
+nambah_screen.configure(bg="white")
+nambah_screen.resizable(False,False)
+
+def enforce_uppercase(new_text, entry):
+    return new_text.upper()
+inp_nopol = Entry(nambah_screen,validate='key', validatecommand=(nambah_screen.register(enforce_uppercase)),width=5,fg='black',border=0,bg='light grey',font=('Microsoft YaHei UI Light',20,'bold'))
+inp_nopol.place(x=100,y=120)
+
+tk.Label(nambah_screen, text='DISINI KENDARAAN MASUK', fg="red", bg='white', font=('century gothic', 18)).pack(pady=20)
+
+nambah_screen.mainloop()
