@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 import csv
-from datetime import datetime, timedelta
+from datetime import datetime
 import random
 
 root = tk.Tk()
@@ -220,48 +220,10 @@ def Main_menu():
 
     try:
         gambar_judul = PhotoImage(file='KELOMPOK 12/MENU_LABEL.png')
-        tk.Label(screen1, image=gambar_judul, bg='white').place(x=15, y=10)
+        tk.Label(screen1, image=gambar_judul, bg='white').place(x=35, y=30)
     except tk.TclError:
         print("Image file not found. Check the path to 'MENU_LABEL.png'.")
     screen1.mainloop()
-
-
-#==========================================================
-#fungsi waktu, demi masa, wal-ashr
-#==========================================================
-def write_current_datetime(filename):
-  with open(filename, 'w', newline='') as csvfile:
-    writer = csv.writer(csvfile)
-    writer.writerow(['Date', 'Time'])
-
-    current_datetime = datetime.now()
-    writer.writerow([current_datetime.strftime("%Y-%m-%d"), current_datetime.strftime("%H:%M:%S")])
-
-def calculate_elapsed_time(filename):
-  with open(filename, 'r') as csvfile:
-    reader = csv.reader(csvfile)
-    next(reader)  # Skip header row
-
-    for row in reader:
-      date_str, time_str = row 
-      datetime_stored = datetime.strptime(f"{date_str} {time_str}", "%Y-%m-%d %H:%M:%S")
-      break  # Assuming only one row of data
-
-  now = datetime.now()
-  elapsed = now - datetime_stored
-  hours = elapsed.seconds // 3600
-  minutes = (elapsed.seconds % 3600) // 60
-  seconds = elapsed.seconds % 60
-  return hours, minutes, seconds
-
-filename = 'MAIN_data_waktu.csv'
-def nulis_waktu_tanggal():
-    write_current_datetime(filename)
-
-def ngasi_waktu_tanggal():
-    elapsed_hours, elapsed_minutes, elapsed_seconds = calculate_elapsed_time(filename)
-    print(f"\nElapsed time since data was stored:")
-    print(f"{elapsed_hours} hours, {elapsed_minutes} minutes, {elapsed_seconds} seconds")
 
 
 #======================================================
@@ -286,10 +248,16 @@ def Kendaraan_baru():
     kode_unik_entry = Entry(nambah_screen,width=15,fg='black',border=0,bg='light grey',font=('Microsoft YaHei UI Light',30))
     kode_unik_entry.place(x=130,y=220)
     
-    tk.Label(nambah_screen, text='kode kota', bg='white', font=('Calibri', 14)).place(x=130,y=80)
-    tk.Label(nambah_screen, text='kode plat', bg='white', font=('Calibri', 14)).place(x=270,y=80)
-    tk.Label(nambah_screen, text='kode unik', bg='white', font=('Calibri', 14)).place(x=130,y=190)
-    tk.Label(nambah_screen, text='DISINI KENDARAAN MASUK', bg='white', font=('Calibri', 20)).pack(pady=20)
+    def on_enter(e):
+        kota_nopol.delete(0, "end")
+    kota_nopol.insert(0,'AD')
+    kota_nopol.bind('<FocusIn>', on_enter)
+    
+
+    tk.Label(nambah_screen, text='kode kota', bg='white', font=('century gothic', 14)).place(x=130,y=80)
+    tk.Label(nambah_screen, text='kode plat', bg='white', font=('century gothic', 14)).place(x=270,y=80)
+    tk.Label(nambah_screen, text='kode unik', bg='white', font=('century gothic', 14)).place(x=130,y=190)
+    tk.Label(nambah_screen, text='DISINI KENDARAAN MASUK', bg='white', font=('century gothic', 20)).pack(pady=20)
 
     def save_data():
         plate_kode = (kota_nopol.get()+ ' ' +inp_nopol.get())
@@ -298,6 +266,8 @@ def Kendaraan_baru():
 
         if kota_nopol.get()=='' or inp_nopol.get()=='':
             messagebox.showerror(title='gagal!', message='Nopol tidak boeh kocong ')
+        elif kota_nopol.get()=='AD' and inp_nopol.get()=='':
+            messagebox.showerror(title='gagal!', message='Kode Plat tidak boeh kocong ')
         elif plate_kode:
             with open("parking_data2.csv", "a", newline="") as file:
                 writer = csv.writer(file)
@@ -347,47 +317,62 @@ def parkir_keluar():
     parkir_screen.configure(bg="white")
     parkir_screen.resizable(False,False)
     parkir_screen.overrideredirect(True)
-    tk.Label(parkir_screen, text='DISINI KENDARAAN KELUAR', bg='white', font=('Calibri', 20)).pack(pady=20)
+    tk.Label(parkir_screen, text='DISINI KENDARAAN KELUAR', bg='white', font=('century gothic', 20)).pack(pady=20)
 
     cek_box = Entry(parkir_screen,width=12,fg='black',border=0,bg='light grey',font=('Microsoft YaHei UI Light',30))
     cek_box.place(x=90,y=90)
 
-    tk.Label(parkir_screen, text='Nopol atau Kode Unik', bg='white', font=('Calibri', 14)).place(x=90,y=56)
+    tk.Label(parkir_screen, text='Nopol atau Kode Unik', bg='white', font=('century gothic', 14)).place(x=90,y=56)
 
-
+        #=======================
+        #PENCARIAN DATA UTAMA
     def search_data():
-        search_value = cek_box.get()  # Get search value
+        search_value = cek_box.get() 
 
         found_data = None
         try:
             with open("parking_data2.csv", "r") as file:
                 reader = csv.reader(file)
-                next(reader)  # Skip header row
+                next(reader) 
                 for row in reader:
                     if (row[0] == search_value) or \
                     (row[1] == search_value):
                         found_data = row
-                        break  # Stop after finding the first match
+                        break 
         except FileNotFoundError:
-            pass  # Ignore if file doesn't exist
+            pass 
 
         if found_data:
             search_result_text = (f"Ditemukan!\nPlat Nomor  : {found_data[0]}\nKode Unik    : {found_data[1]}\nWaktu Masuk   : {found_data[2]}")
+            date_str = (f'{found_data[2]}')  
+            datetime_stored = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+            now = datetime.now()
+            elapsed = now - datetime_stored
+            hours = elapsed.seconds // 3600
+            minutes = (elapsed.seconds % 3600) // 60
+            seconds = elapsed.seconds % 60
+            waktu_berlalu=(f"durasi parkir: {hours} jam, {minutes} menit, {seconds} detik")
         else:
-            search_result_text = f"Tidak ada nopol {search_value} di parkiran"
+            search_result_text = f"Tidak ada Data {search_value} di parkiran"
 
-        # Display search result
         search_result_window=Toplevel(root)
         search_result_window.geometry('880x310+158+340')
         search_result_window.configure(bg="light grey")
         search_result_window.resizable(False,False)
         search_result_window.overrideredirect(True)
 
-        search_result_label = tk.Label(search_result_window, text=search_result_text,bg='white',font=("Century Gothic", 17),justify="left")
-        search_result_label.place(x=40,y=40)
+        search_result_label = tk.Label(search_result_window, text=search_result_text,bg='white',font=("Century Gothic", 14),justify="left")
+        search_result_label.place(x=35,y=20)
+
+        try:
+            durasi_label = tk.Label(search_result_window, text=waktu_berlalu,bg='white',font=("Century Gothic", 14),justify="left")
+            durasi_label.place(x=35,y=120)
+        except:
+            None
 
         search_result_window.mainloop()
     
+       
     cek_data=Button(parkir_screen,width=16,text='CEK',fg='black',border=2,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'),command=search_data)
     cek_data.place(x=430,y=100)
 
