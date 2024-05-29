@@ -1,0 +1,27 @@
+from tkinter import Tk, Label
+from PIL import Image, ImageTk
+
+def create_image_label(root, image_path, x, y, bg='white'):
+    try:
+        img = Image.open(image_path)
+        gambar_kiri = ImageTk.PhotoImage(img)
+        label = Label(root, image=gambar_kiri, bg=bg)
+        label.place(x=x, y=y)
+        # Keep a reference to avoid garbage collection
+        label.image = gambar_kiri
+    except FileNotFoundError:
+        print(f"Image file not found. Check the path to '{image_path}'.")
+
+# Example usage
+if __name__ == "__main__":
+    root = Tk()
+    root.title("Image Example")
+    root.geometry("500x500")  # Set the window size
+
+    # Path to the image file
+    image_path = "LOGO LOGIN.png"
+
+    # Call the function to create the image label
+    create_image_label(root, image_path, -5, -50)
+
+    root.mainloop()
