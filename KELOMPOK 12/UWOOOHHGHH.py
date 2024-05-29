@@ -164,6 +164,7 @@ copy.place(x=330,y=420)
 def Main_menu():
     #untuk hide login screen
     root.withdraw()
+
     screen1=Toplevel(root)
     screen1.title("MAIN MENU")
     m = screen1.maxsize()
@@ -183,9 +184,9 @@ def Main_menu():
         screen1.after(1000, jam_time)
 
     time_label = tk.Label(screen1, bg='white', text="", font=("century gothic", 30))
-    time_label.place(x=890,y=60)
+    time_label.place(x=890,y=120)
     hari_label = tk.Label(screen1, bg='white', text="", font=("century gothic", 20))
-    hari_label.place(x=530,y=73)
+    hari_label.place(x=530,y=133)
     jam_time()
     hari_time()
 
@@ -213,10 +214,15 @@ def Main_menu():
 
     layar_gede = tk.Frame(screen1, highlightbackground= "black", highlightthickness=5,bg="white")
 
-    layar_gede.place(x=150,y=118)
+    layar_gede.place(x=150,y=178)
     layar_gede.pack_propagate(False)
     layar_gede.configure(height=500, width=900)
 
+    try:
+        gambar_judul = PhotoImage(file='KELOMPOK 12/MENU_LABEL.png')
+        tk.Label(screen1, image=gambar_judul, bg='white').place(x=15, y=10)
+    except tk.TclError:
+        print("Image file not found. Check the path to 'MENU_LABEL.png'.")
     screen1.mainloop()
 
 
@@ -266,7 +272,7 @@ def ngasi_waktu_tanggal():
 def Kendaraan_baru():
     nambah_screen=Toplevel(root)
     nambah_screen.title("KENDARAAN BARU")
-    nambah_screen.geometry('880x480+158+130')
+    nambah_screen.geometry('880x480+158+190')
     nambah_screen.configure(bg="white")
     nambah_screen.resizable(False,False)
     nambah_screen.overrideredirect(True)
@@ -325,7 +331,7 @@ def Kendaraan_baru():
         for row in data:
             data_text += f"{row[0]}\t\t{row[1]}\t\t{row[2]}\n"
 
-        data_label = tk.Label(display_window, text=data_text, font=("Arial", 12))
+        data_label = tk.Label(display_window, text=data_text, font=("Microsoft YaHei UI Light", 12))
         data_label.pack()
 
         display_window.mainloop()
@@ -337,15 +343,16 @@ def Kendaraan_baru():
 def parkir_keluar():
     parkir_screen=Toplevel(root)
     parkir_screen.title("KENDARAAN KELUAR DAN CEK")
-    parkir_screen.geometry('880x480+158+130')
+    parkir_screen.geometry('880x480+158+190')
     parkir_screen.configure(bg="white")
     parkir_screen.resizable(False,False)
     parkir_screen.overrideredirect(True)
     tk.Label(parkir_screen, text='DISINI KENDARAAN KELUAR', bg='white', font=('Calibri', 20)).pack(pady=20)
 
-
     cek_box = Entry(parkir_screen,width=12,fg='black',border=0,bg='light grey',font=('Microsoft YaHei UI Light',30))
-    cek_box.place(x=130,y=120)
+    cek_box.place(x=90,y=90)
+
+    tk.Label(parkir_screen, text='Nopol atau Kode Unik', bg='white', font=('Calibri', 14)).place(x=90,y=56)
 
 
     def search_data():
@@ -364,28 +371,31 @@ def parkir_keluar():
         except FileNotFoundError:
             pass  # Ignore if file doesn't exist
 
-        # Display search result
-        search_result_window = tk.Tk()
-        search_result_window.title("Search Result")
-
         if found_data:
-            search_result_text = f"Plate Number: {found_data[0]}\nCode: {found_data[1]}\nEntry Time: {found_data[2]}"
+            search_result_text = (f"Ditemukan!\nPlat Nomor  : {found_data[0]}\nKode Unik    : {found_data[1]}\nWaktu Masuk   : {found_data[2]}")
         else:
-            search_result_text = f"No data found for search value: {search_value}"
+            search_result_text = f"Tidak ada nopol {search_value} di parkiran"
 
-        search_result_label = tk.Label(search_result_window, text=search_result_text, font=("Arial", 12))
-        search_result_label.pack()
+        # Display search result
+        search_result_window=Toplevel(root)
+        search_result_window.geometry('880x310+158+340')
+        search_result_window.configure(bg="light grey")
+        search_result_window.resizable(False,False)
+        search_result_window.overrideredirect(True)
+
+        search_result_label = tk.Label(search_result_window, text=search_result_text,bg='white',font=("Century Gothic", 17),justify="left")
+        search_result_label.place(x=40,y=40)
 
         search_result_window.mainloop()
     
-    cek_data=Button(parkir_screen,width=16,text='liat',fg='black',border=2,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'),command=search_data)
-    cek_data.place(x=134,y=350)
+    cek_data=Button(parkir_screen,width=16,text='CEK',fg='black',border=2,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'),command=search_data)
+    cek_data.place(x=430,y=100)
 
 
 def laporan():
     laporan_screen=Toplevel(root)
     laporan_screen.title("CEK KAPASITAS")
-    laporan_screen.geometry('880x480+158+130')
+    laporan_screen.geometry('880x480+158+190')
     laporan_screen.configure(bg="white")
     laporan_screen.resizable(False,False)
     laporan_screen.overrideredirect(True)
@@ -397,11 +407,9 @@ def confirm_exit():
     if response:
         root.destroy()
 
-
 def ini_about():
     abot_bosku=Toplevel(root)
-    abot_bosku.title("CEK KAPASITAS")
-    abot_bosku.geometry('880x480+158+130')
+    abot_bosku.geometry('880x480+158+190')
     abot_bosku.configure(bg="#fff")
     abot_bosku.resizable(False,False)
     abot_bosku.overrideredirect(True)
