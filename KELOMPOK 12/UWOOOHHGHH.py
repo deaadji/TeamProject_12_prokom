@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 import csv
 from datetime import datetime, timedelta
+import random
 
 root = tk.Tk()
 root.wm_title('SI JAGO PARKIR')
@@ -11,9 +12,8 @@ root.configure(bg="#fff")
 root.resizable(False,False)
 
 #===================================================
-#fungsi utama login screen jadiiiiiiii UWOGHHHHH ^0^
+#fungsi utama login screen
 #===================================================
-
 def login_CMD():
     usernama=username.get()
     paswed=password.get()
@@ -30,7 +30,7 @@ def login_CMD():
 
 #=======================================================
 # MAIN REGISTER WINDOW
-
+#=======================================================
 def register():
     daftar_screen=Toplevel(root)
     daftar_screen.title("DAFTAR")
@@ -86,8 +86,6 @@ def register():
 #===================================================================
 #GUI login screen
 #===================================================================
-
-
 #bug disini, janlup directory nya
 try:
     gambar_kiri = PhotoImage(file='KELOMPOK 12/LOGO LOGIN.png')
@@ -173,6 +171,25 @@ def Main_menu():
     screen1.config(bg='white')
     screen1.overrideredirect(True)
 
+    #label waktu
+    def jam_time():
+        current_time = datetime.now().strftime('%H:%M:%S')  
+        time_label.config(text=current_time) 
+        screen1.after(1000, jam_time)
+
+    def hari_time():
+        current_time = datetime.now().strftime('%A, %B %d 20%y')  
+        hari_label.config(text=current_time) 
+        screen1.after(1000, jam_time)
+
+    time_label = tk.Label(screen1, bg='white', text="", font=("century gothic", 30))
+    time_label.place(x=890,y=60)
+    hari_label = tk.Label(screen1, bg='white', text="", font=("century gothic", 20))
+    hari_label.place(x=530,y=73)
+    jam_time()
+    hari_time()
+
+    #===============================
     about_btn = tk.Button(screen1, text="about", font=("century gothic", 25), fg="Red", bd=0, bg="White", command=ini_about)
     about_btn.place(x=20, y=165)
 
@@ -188,7 +205,7 @@ def Main_menu():
     masuk_btn = tk.Button(screen1, text='Kendaraan masuk', fg='white', width=45, height=10, bd=0, bg="red", command=Kendaraan_baru)
     masuk_btn.place(x=1140, y=30)
 
-    keluar_btn = tk.Button(screen1, text='Kendaraan keluar dan CEK', fg='white', width=45, height=10, bd=0, bg="red", command=parkir)
+    keluar_btn = tk.Button(screen1, text='Kendaraan keluar dan CEK', fg='white', width=45, height=10, bd=0, bg="red", command=parkir_keluar)
     keluar_btn.place(x=1140, y=280)
 
     cek_btn = tk.Button(screen1,text='cek kapasitas', fg='white', width=45, height=10, bd=0, bg="red",command=laporan)
@@ -199,10 +216,6 @@ def Main_menu():
     layar_gede.place(x=150,y=118)
     layar_gede.pack_propagate(False)
     layar_gede.configure(height=500, width=900)
-
-    def show_about():
-        about_label = tk.Label(screen1, text=info_about, font=("Microsoft YaHei UI Light", 16), bg="white")
-        about_label.pack(expand=True)
 
     screen1.mainloop()
 
@@ -224,7 +237,7 @@ def calculate_elapsed_time(filename):
     next(reader)  # Skip header row
 
     for row in reader:
-      date_str, time_str = row
+      date_str, time_str = row 
       datetime_stored = datetime.strptime(f"{date_str} {time_str}", "%Y-%m-%d %H:%M:%S")
       break  # Assuming only one row of data
 
@@ -246,7 +259,9 @@ def ngasi_waktu_tanggal():
 
 
 #======================================================
+#
 #fungsi-fungsi main menu
+#
 #======================================================
 def Kendaraan_baru():
     nambah_screen=Toplevel(root)
@@ -256,20 +271,116 @@ def Kendaraan_baru():
     nambah_screen.resizable(False,False)
     nambah_screen.overrideredirect(True)
 
-    inp_nopol = Entry(nambah_screen,width=25,fg='black',border=0,bg='grey',font=('Microsoft YaHei UI Light',13))
-    inp_nopol.place(x=30,y=140)
+    kota_nopol = Entry(nambah_screen,width=5,fg='black',border=0,bg='light grey',font=('Microsoft YaHei UI Light',30))
+    kota_nopol.place(x=130,y=110)
 
+    inp_nopol = Entry(nambah_screen,width=15,fg='black',border=0,bg='light grey',font=('Microsoft YaHei UI Light',30))
+    inp_nopol.place(x=270,y=110)
+
+    kode_unik_entry = Entry(nambah_screen,width=15,fg='black',border=0,bg='light grey',font=('Microsoft YaHei UI Light',30))
+    kode_unik_entry.place(x=130,y=220)
+    
+    tk.Label(nambah_screen, text='kode kota', bg='white', font=('Calibri', 14)).place(x=130,y=80)
+    tk.Label(nambah_screen, text='kode plat', bg='white', font=('Calibri', 14)).place(x=270,y=80)
+    tk.Label(nambah_screen, text='kode unik', bg='white', font=('Calibri', 14)).place(x=130,y=190)
     tk.Label(nambah_screen, text='DISINI KENDARAAN MASUK', bg='white', font=('Calibri', 20)).pack(pady=20)
 
-def parkir():
+    def save_data():
+        plate_kode = (kota_nopol.get()+ ' ' +inp_nopol.get())
+        code = random.randint(100000, 999999)
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        if kota_nopol.get()=='' or inp_nopol.get()=='':
+            messagebox.showerror(title='gagal!', message='Nopol tidak boeh kocong ')
+        elif plate_kode:
+            with open("parking_data2.csv", "a", newline="") as file:
+                writer = csv.writer(file)
+                writer.writerow([plate_kode, code, current_time])
+            kota_nopol.delete(0, tk.END) 
+            inp_nopol.delete(0, tk.END)  
+            messagebox.showinfo(title='Sukses!', message='Berhasil menyimpan!')
+        else:
+            messagebox.showerror(title='gagal!', message='gagal menyimpan!\npastikan nopol benar')
+
+    Simpan=Button(nambah_screen,width=16,text='Simpan',fg='black',border=2,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'), command=save_data)
+    Simpan.place(x=134,y=300)
+
+
+    def read_data():
+        data = []
+        try:
+            with open("parking_data2.csv", "r") as file:
+                reader = csv.reader(file)
+                next(reader)  # Skip header row
+                for row in reader:
+                    data.append(row)
+        except FileNotFoundError:
+            pass  # Ignore if file doesn't exist
+
+        # Display data in a new window
+        display_window = tk.Tk()
+        display_window.title("KENDARAAN PARKIR SAAT INI")
+
+        data_text = "Plat Nomor\tkode Unik\t\tWaktu Masuk\n"
+        for row in data:
+            data_text += f"{row[0]}\t\t{row[1]}\t\t{row[2]}\n"
+
+        data_label = tk.Label(display_window, text=data_text, font=("Arial", 12))
+        data_label.pack()
+
+        display_window.mainloop()
+    
+    liat_data=Button(nambah_screen,width=16,text='liat',fg='black',border=2,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'), command=read_data)
+    liat_data.place(x=134,y=350)
+    
+        
+def parkir_keluar():
     parkir_screen=Toplevel(root)
-    parkir_screen.title("KENDARAAN KELUAR DAN CEJ")
+    parkir_screen.title("KENDARAAN KELUAR DAN CEK")
     parkir_screen.geometry('880x480+158+130')
-    parkir_screen.configure(bg="red")
+    parkir_screen.configure(bg="white")
     parkir_screen.resizable(False,False)
     parkir_screen.overrideredirect(True)
-
     tk.Label(parkir_screen, text='DISINI KENDARAAN KELUAR', bg='white', font=('Calibri', 20)).pack(pady=20)
+
+
+    cek_box = Entry(parkir_screen,width=12,fg='black',border=0,bg='light grey',font=('Microsoft YaHei UI Light',30))
+    cek_box.place(x=130,y=120)
+
+
+    def search_data():
+        search_value = cek_box.get()  # Get search value
+
+        found_data = None
+        try:
+            with open("parking_data2.csv", "r") as file:
+                reader = csv.reader(file)
+                next(reader)  # Skip header row
+                for row in reader:
+                    if (row[0] == search_value) or \
+                    (row[1] == search_value):
+                        found_data = row
+                        break  # Stop after finding the first match
+        except FileNotFoundError:
+            pass  # Ignore if file doesn't exist
+
+        # Display search result
+        search_result_window = tk.Tk()
+        search_result_window.title("Search Result")
+
+        if found_data:
+            search_result_text = f"Plate Number: {found_data[0]}\nCode: {found_data[1]}\nEntry Time: {found_data[2]}"
+        else:
+            search_result_text = f"No data found for search value: {search_value}"
+
+        search_result_label = tk.Label(search_result_window, text=search_result_text, font=("Arial", 12))
+        search_result_label.pack()
+
+        search_result_window.mainloop()
+    
+    cek_data=Button(parkir_screen,width=16,text='liat',fg='black',border=2,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'),command=search_data)
+    cek_data.place(x=134,y=350)
+
 
 def laporan():
     laporan_screen=Toplevel(root)

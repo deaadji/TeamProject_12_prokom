@@ -1,0 +1,111 @@
+import tkinter as tk
+from datetime import datetime
+import random
+import csv
+
+def generate_code():
+    code = random.randint(100000, 999999)  # Generate 6-digit code
+    
+
+def save_data():
+    plate_number = plate_number_entry.get()
+    code = random.randint(100000, 999999)  # Generate 6-digit code
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    if plate_number:
+        with open("parking_data.csv", "a", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow([plate_number, code, current_time])
+        plate_number_entry.delete(0, tk.END)  # Clear entry box
+        success_label.config(text="Data saved successfully!")
+    else:
+        error_label.config(text="Please enter a plate number.")
+
+def read_data():
+    data = []
+    try:
+        with open("parking_data.csv", "r") as file:
+            reader = csv.reader(file)
+            next(reader)  # Skip header row
+            for row in reader:
+                data.append(row)
+    except FileNotFoundError:
+        pass  # Ignore if file doesn't exist
+
+    # Display data in a new window
+    display_window = tk.Tk()
+    display_window.title("Parking Data")
+
+    data_text = "Plate Number\tCode\t\tEntry Time\n"
+    for row in data:
+        data_text += f"{row[0]}\t\t{row[1]}\t\t{row[2]}\n"
+
+    data_label = tk.Label(display_window, text=data_text, font=("Arial", 12))
+    data_label.pack()
+
+    display_window.mainloop()
+
+
+
+def search_data():
+    search_type = search_type_var.get()  # Get search type (plate number or code)
+    search_value = search_entry.get()  # Get search value
+
+    found_data = None
+    try:
+        with open("parking_data.csv", "r") as file:
+            reader = csv.reader(file)
+            next(reader)  # Skip header row
+            for row in reader:
+                if (search_type == "plate number" and row[0] == search_value) or \
+                   (search_type == "code" and row[1] == search_value):
+                    found_data = row
+                    break  # Stop after finding the first match
+    except FileNotFoundError:
+        pass  # Ignore if file doesn't exist
+
+    # Display search result
+    search_result_window = tk.Tk()
+    search_result_window.title("Search Result")
+
+    if found_data:
+        search_result_text = f"Plate Number: {found_data[0]}\nCode: {found_data[1]}\nEntry Time: {found_data[2]}"
+    else:
+        search_result_text = f"No data found for search type: {search_type}, search value: {search_value}"
+
+    search_result_label = tk.Label(search_result_window, text=search_result_text, font=("Arial", 12))
+    search_result_label.pack()
+
+    search_result_window.mainloop()
+
+# Create the main window
+root = tk.Tk()
+root.title("Parking Code Generator")
+
+# Plate number label and entry
+plate_number_label = tk.Label(root, text="Plate Number:")
+plate_number_label.pack()
+plate_number_entry = tk.Entry(root)
+plate_number_entry.pack()
+
+# Generate code button
+generate_button = tk.Button(root, text="Generate Code", command=generate_code)
+generate_button.pack()
+
+# Code display labZZ
+
+# Save button
+save_button = tk.Button(root, text="Save Data", command=save_data)
+save_button.pack()
+
+# Read data button
+read_button = tk.Button(root, text="Read Data", command=read_data)
+read_button.pack()
+
+# Success and error labels
+success_label = tk.Label(root, text="")
+success_label.pack()
+error_label = tk.Label(root, text="")
+error_label.pack()
+
+root.mainloop()
