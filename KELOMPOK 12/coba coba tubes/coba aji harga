@@ -1,0 +1,57 @@
+import datetime
+
+def hitung_biaya_parkir(jenis_kendaraan, waktu_masuk, waktu_keluar):
+  """
+  Hitung biaya parkir berdasarkan jenis kendaraan dan durasi parkir.
+
+  Args:
+      jenis_kendaraan (str): "motor" atau "mobil".
+      waktu_masuk (datetime): Waktu masuk parkir (format datetime.datetime).
+      waktu_keluar (datetime): Waktu keluar parkir (format datetime.datetime).
+
+  Returns:
+      int: Biaya parkir yang harus dibayarkan.
+  """
+
+  durasi_menit = (waktu_keluar - waktu_masuk).total_seconds() / 60
+  durasi_jam = durasi_menit / 60
+
+  if jenis_kendaraan == "motor":
+    if durasi_jam < 1:
+      biaya = 2000
+    else:
+      biaya_awal = 2000
+      durasi_sisa_menit = durasi_menit % 60
+      durasi_sisa_jam = int(durasi_menit // 60)
+
+      biaya_tambahan = durasi_sisa_jam * 1000
+      if durasi_sisa_menit > 30:
+        biaya_tambahan += 1000
+
+      biaya = biaya_awal + biaya_tambahan
+  elif jenis_kendaraan == "mobil":
+    if durasi_jam < 1:
+      biaya = 5000
+    else:
+      biaya_awal = 5000
+      durasi_sisa_jam = int(durasi_jam - 1)
+
+      biaya_tambahan = durasi_sisa_jam * 2000
+      biaya = biaya_awal + biaya_tambahan
+  else:
+    raise ValueError("Jenis kendaraan tidak valid. Pilih 'motor' atau 'mobil'.")
+
+  return int(biaya)
+
+# Contoh penggunaan
+waktu_masuk_str = "2024-05-30 10:00:00"
+waktu_keluar_str = "2024-05-30 14:30:00"
+
+waktu_masuk = datetime.datetime.strptime(waktu_masuk_str, "%Y-%m-%d %H:%M:%S")
+waktu_keluar = datetime.datetime.strptime(waktu_keluar_str, "%Y-%m-%d %H:%M:%S")
+
+jenis_kendaraan = "motor"  # Ubah sesuai jenis kendaraan
+
+biaya_parkir = hitung_biaya_parkir(jenis_kendaraan, waktu_masuk, waktu_keluar)
+
+print(f"Biaya parkir untuk {jenis_kendaraan} selama jam adalah Rp{biaya_parkir:,}")

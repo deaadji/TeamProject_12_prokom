@@ -90,12 +90,13 @@ def register():
 try:
     gambar_kiri = PhotoImage(file='KELOMPOK 12/LOGO LOGIN.png')
     tk.Label(root, image=gambar_kiri, bg='white').place(x=-5, y=-50)
+    Label(root,image=gambar_kiri,bg='white').place(x=-5,y=-50)
 except tk.TclError:
     print("Image file not found. Check the path to 'LOGO LOGIN.png'.")
 
 frame=Frame(root,width=350,height=350,bg='white')
 frame.place(x=480,y=70)
-Label(root,image=gambar_kiri,bg='white').place(x=-5,y=-50)
+
 
 masuk=Label(frame,text='Masuk',fg='red',bg='white',font=('century gothic',23))
 masuk.place(x=125,y=10)
@@ -110,7 +111,6 @@ def on_leave_username(e):
         username.insert(0, 'Tulis Username Anda')
         username.config(fg='grey')
         
-
 username = Entry(frame,width=25,fg='grey',border=0,bg='white',font=('Microsoft YaHei UI Light',13))
 username.place(x=30,y=80)
 username.insert(0,'Tulis Username Anda')
@@ -142,7 +142,7 @@ def toggle_password():
     else:
         password.config(show='*')
 
-show_password_check = tk.Checkbutton(frame, text="Show Password", variable=show_password_var, onvalue=1, offvalue=0, command=toggle_password, bg='white', fg='black', font=('Microsoft YaHei UI Light', 10))
+show_password_check = tk.Checkbutton(frame, text="Lihat Password", variable=show_password_var, onvalue=1, offvalue=0, command=toggle_password, bg='white', fg='black', font=('Microsoft YaHei UI Light', 10))
 show_password_check.place(x=30, y=170)
 
 Frame(frame,width=300,height=2,bg='black').place(x=25,y=110)
@@ -203,14 +203,26 @@ def Main_menu():
     menu_indicate = tk.Label(screen1, text="", bg="Red")
     menu_indicate.place(x=3, y=245, width=5, height=40)
 
-    masuk_btn = tk.Button(screen1, text='Kendaraan masuk', fg='white', width=45, height=10, bd=0, bg="red", command=Kendaraan_baru)
-    masuk_btn.place(x=1140, y=30)
+    try:
+        gambar_masuk = PhotoImage(file='KELOMPOK 12/MASHOK.png')
+        masuk_btn = tk.Button(screen1, image=gambar_masuk, bd=0, bg="white", command=Kendaraan_baru)
+        masuk_btn.place(x=1130, y=30)
+    except tk.TclError:
+        print("Image file not found. Check the path to 'LOGO LOGIN.png'.")
 
-    keluar_btn = tk.Button(screen1, text='Kendaraan keluar dan CEK', fg='white', width=45, height=10, bd=0, bg="red", command=parkir_keluar)
-    keluar_btn.place(x=1140, y=280)
+    try:
+        gambar_keluar = PhotoImage(file='KELOMPOK 12/KELVAR.png')
+        keluar_btn = tk.Button(screen1, image=gambar_keluar ,bd=0,bg="white", command=parkir_keluar)
+        keluar_btn.place(x=1130, y=280)
+    except tk.TclError:
+        print("Image file not found. Check the path to 'LOGO LOGIN.png'.")
 
-    cek_btn = tk.Button(screen1,text='cek kapasitas', fg='white', width=45, height=10, bd=0, bg="red",command=laporan)
-    cek_btn.place(x=1140, y=550)
+    try:
+        gambar_cek = PhotoImage(file='KELOMPOK 12/CAPASITY.png')
+        cek_btn = tk.Button(screen1, image=gambar_cek, bd=0, bg="white",command=laporan)
+        cek_btn.place(x=1130, y=550)
+    except tk.TclError:
+        print("Image file not found. Check the path to 'LOGO LOGIN.png'.")
 
     layar_gede = tk.Frame(screen1, highlightbackground= "black", highlightthickness=5,bg="white")
 
@@ -238,6 +250,11 @@ def Kendaraan_baru():
     nambah_screen.configure(bg="white")
     nambah_screen.resizable(False,False)
     nambah_screen.overrideredirect(True)
+    code = random.randint(100000, 999999)
+    Sepeda_motor_cek = IntVar()
+    Mobil_cek = IntVar()
+
+    
 
     kota_nopol = Entry(nambah_screen,width=5,fg='black',border=0,bg='light grey',font=('Microsoft YaHei UI Light',30))
     kota_nopol.place(x=130,y=110)
@@ -247,7 +264,14 @@ def Kendaraan_baru():
 
     kode_unik_entry = Entry(nambah_screen,width=15,fg='black',border=0,bg='light grey',font=('Microsoft YaHei UI Light',30))
     kode_unik_entry.place(x=130,y=220)
-    
+    kode_unik_entry.insert(0,code)
+
+    check_Sepeda_motor_cek = tk.Checkbutton(nambah_screen, variable=Sepeda_motor_cek,text="Sepeda Motor", onvalue=1, offvalue=0, bg='white', fg='black', font=('Microsoft YaHei UI Light', 14))
+    check_Sepeda_motor_cek.place(x=480, y=190)
+
+    check_Mobil_cek = tk.Checkbutton(nambah_screen, variable=Mobil_cek, text="Mobil" ,onvalue=1, offvalue=0, bg='white', fg='black', font=('Microsoft YaHei UI Light', 14))
+    check_Mobil_cek.place(x=480, y=230)
+
     def on_enter(e):
         kota_nopol.delete(0, "end")
     kota_nopol.insert(0,'AD')
@@ -261,7 +285,6 @@ def Kendaraan_baru():
 
     def save_data():
         plate_kode = (kota_nopol.get()+ ' ' +inp_nopol.get())
-        code = random.randint(100000, 999999)
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         if kota_nopol.get()=='' or inp_nopol.get()=='':
@@ -275,19 +298,20 @@ def Kendaraan_baru():
             kota_nopol.delete(0, tk.END) 
             inp_nopol.delete(0, tk.END)  
             messagebox.showinfo(title='Sukses!', message='Berhasil menyimpan!')
+            kota_nopol.insert(0,'AD')
+            kode_unik_entry.delete(0, "end")
+            kode_unik_entry.insert(0,code)
         else:
-            messagebox.showerror(title='gagal!', message='gagal menyimpan!\npastikan nopol benar')
+            messagebox.showerror(title='gagal!', message='gagal menyimpan!\npastikan nopol benar')  
 
     Simpan=Button(nambah_screen,width=16,text='Simpan',fg='black',border=2,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'), command=save_data)
     Simpan.place(x=134,y=300)
-
 
     def read_data():
         data = []
         try:
             with open("parking_data2.csv", "r") as file:
                 reader = csv.reader(file)
-                next(reader)  # Skip header row
                 for row in reader:
                     data.append(row)
         except FileNotFoundError:
@@ -297,7 +321,7 @@ def Kendaraan_baru():
         display_window = tk.Tk()
         display_window.title("KENDARAAN PARKIR SAAT INI")
 
-        data_text = "Plat Nomor\tkode Unik\t\tWaktu Masuk\n"
+        data_text = "Plat Nomor\tkode Unik\t\tWaktu Masuk\t\t\tJenis Kendaraan\n"
         for row in data:
             data_text += f"{row[0]}\t\t{row[1]}\t\t{row[2]}\n"
 
@@ -305,9 +329,27 @@ def Kendaraan_baru():
         data_label.pack()
 
         display_window.mainloop()
-    
+
+    def DELETE_ALL():
+        modified_data = []
+        response = messagebox.askyesno("Konfirmasi hapus", "Apakah Anda yakin ingin hapus semua kendaraan di data?")
+        if response:
+            try:
+                with open("parking_data2.csv", "w", newline="") as outfile:
+                    writer = csv.writer(outfile)
+                    writer.writerows(modified_data)
+
+                messagebox.showinfo(title="Sukses!", message="Semua Data berhasil dihapus!")
+            except FileNotFoundError:
+                messagebox.showerror(title="Gagal!", message="File 'parking_data2.csv' tidak ditemukan!")
+            except Exception as e:
+                messagebox.showerror(title="Gagal!", message="Terjadi kesalahan: " + str(e))
+
     liat_data=Button(nambah_screen,width=16,text='liat',fg='black',border=2,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'), command=read_data)
     liat_data.place(x=134,y=350)
+
+    delete_alll=Button(nambah_screen,width=16,text='Delete all',fg='black',border=2,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'), command=DELETE_ALL)
+    delete_alll.place(x=254,y=350)
     
         
 def parkir_keluar():
@@ -333,7 +375,6 @@ def parkir_keluar():
         try:
             with open("parking_data2.csv", "r") as file:
                 reader = csv.reader(file)
-                next(reader) 
                 for row in reader:
                     if (row[0] == search_value) or \
                     (row[1] == search_value):
@@ -369,10 +410,58 @@ def parkir_keluar():
             durasi_label.place(x=35,y=120)
         except:
             None
-
         search_result_window.mainloop()
-    
-       
+
+    def delete_line_from_csv():
+        plate_kode_to_delete = cek_box.get() 
+        updated_data = []
+
+        # Read the entire CSV file into memory
+        with open("parking_data2.csv", "r", newline="") as file:
+            reader = csv.reader(file)
+            for row in reader:
+                if row[0] != plate_kode_to_delete:  # Check if plate code matches
+                    updated_data.append(row)
+
+        # Overwrite the original file with the updated data (excluding the deleted line)
+        with open("parking_data2.csv", "w", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerows(updated_data)
+
+        # Confirmation message (optional)
+        messagebox.showinfo(title="Sukses!", message="plat nomor " + plate_kode_to_delete + "Keluar dari Parkiran!")
+
+
+    def read_data():
+        data = []
+        try:
+            with open("parking_data2.csv", "r") as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    data.append(row)
+        except FileNotFoundError:
+            pass  # Ignore if file doesn't exist
+
+        # Display data in a new window
+        display_window = tk.Tk()
+        display_window.title("KENDARAAN PARKIR SAAT INI")
+
+        data_text = "Plat Nomor\tkode Unik\t\tWaktu Masuk\t\t\tJenis Kendaraan\n"
+        for row in data:
+            data_text += f"{row[0]}\t\t{row[1]}\t\t{row[2]}\n"
+
+        data_label = tk.Label(display_window, text=data_text, font=("Microsoft YaHei UI Light", 12))
+        data_label.pack()
+
+        display_window.mainloop()
+
+
+    keluar_data=Button(parkir_screen,width=16,text='Kendaraan Keluar',fg='black',border=2,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'), command=delete_line_from_csv)
+    keluar_data.place(x=600,y=100)
+
+    Read_data_keluar=Button(parkir_screen,width=16,text='Lihat Parkiran',fg='black',border=2,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'),command=read_data)
+    Read_data_keluar.place(x=770,y=100)
+
     cek_data=Button(parkir_screen,width=16,text='CEK',fg='black',border=2,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'),command=search_data)
     cek_data.place(x=430,y=100)
 
@@ -386,6 +475,7 @@ def laporan():
     laporan_screen.overrideredirect(True)
 
     tk.Label(laporan_screen, text='DISINI KAPASITASNYA SEGINI', bg='white', font=('Calibri', 20)).pack(pady=20)
+
 
 def confirm_exit():
     response = messagebox.askyesno("Konfirmasi Keluar", "Apakah Anda yakin ingin keluar?")
