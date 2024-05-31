@@ -37,6 +37,12 @@ def register():
     daftar_screen.geometry('625x500')
     daftar_screen.config(bg='white')
     
+    try:
+        gambar_kiri = PhotoImage(file='KELOMPOK 12/DAFTAR.png')
+        Label(daftar_screen,image=gambar_kiri,bg='white').place(x=145,y=-50)
+    except tk.TclError:
+        print("Image file not found. Check the path.")
+
     Frame(daftar_screen,width=280,height=2,bg='black').place(x=165,y=250)
     Frame(daftar_screen,width=280,height=2,bg='black').place(x=165,y=320)
 
@@ -82,12 +88,7 @@ def register():
     tulis_password=Label(daftar_screen,text='Password :',fg='black',bg='white',font=('Microsoft YaHei UI Light',9))
     tulis_password.place(x=172,y=265)
 
-    #try:
-    #    gambar_dafatar = PhotoImage(file='KELOMPOK 12/DAFTAR.png')
-    #    tk.Label(daftar_screen, image=gambar_dafatar, bg='white').place(x=100,y=200)
-    #except:
-    #    print("Image file not found. Check the path to 'DAFTAR.png'.")
-
+    daftar_screen.mainloop()
 
 #===================================================================
 #GUI login screen
@@ -159,7 +160,7 @@ akun.place(x=62,y=250)
 daftar=Button(frame,width=16,text='Daftar sekarang!',border=0,bg='white',cursor='hand2',font=('Microsoft YaHei UI Light',8,'bold'), command=register)
 daftar.place(x=110,y=270)
 
-copy=Label(root,text='Kelompok 12 Nexus Copyright @2024',fg='navy',border=0,bg='white',font=('Microsoft YaHei UI Light',9,'italic'))
+copy=Label(root,text='v1.0.2 Alpha Kelompok 12 Nexus Copyright @2024',fg='navy',border=0,bg='white',font=('Microsoft YaHei UI Light',9,'italic'))
 copy.place(x=330,y=420)
 
 
@@ -664,7 +665,7 @@ info_about = (
     "BACKEND FRAME BUILDER\n"
     "Irma Arisa\n"
     " \n"
-    "Copyright @2024 Kelompok 12 Nexus\n"
+    "v1.0.2 Copyright @2024 Kelompok 12 Nexus\n"
     " \n"
     "See our code on :\n"
     "https://github.com/deaadji/TeamProject_12_prokom\n"
